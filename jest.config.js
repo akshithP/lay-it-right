@@ -1,0 +1,4 @@
+const nextJest = require('next/jest')
+
+/** @type {import('jest').Config} */
+const createJestConfig = nextJest({\n  dir: './'\n})\n\nconst config = {\n  coverageProvider: 'v8',\n  testEnvironment: 'jsdom',\n  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],\n  moduleNameMapping: {\n    '^@/(.*)$': '<rootDir>/src/$1'\n  },\n  testMatch: [\n    '<rootDir>/__tests__/**/*.(test|spec).(ts|tsx|js|jsx)',\n    '<rootDir>/src/**/__tests__/**/*.(test|spec).(ts|tsx|js|jsx)',\n    '<rootDir>/src/**/?(*.)(test|spec).(ts|tsx|js|jsx)'\n  ],\n  collectCoverageFrom: [\n    'src/**/*.{ts,tsx}',\n    '!src/**/*.d.ts',\n    '!src/**/index.ts'\n  ],\n  coverageThreshold: {\n    global: {\n      branches: 70,\n      functions: 70,\n      lines: 70,\n      statements: 70\n    }\n  }\n}\n\nmodule.exports = createJestConfig(config)

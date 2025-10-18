@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Draw Your Layout V2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="canvas_drawing_theme.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-4" style="border-color: var(--royal-blue); background: var(--white);">
+        <div class="text-2xl font-bold" style="color: var(--royal-blue);">LAYITRIGHT</div>
+        <div class="flex gap-4">
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="help-circle" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-6xl">
+        <!-- Title -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4" style="color: var(--royal-blue);">
+                CREATE YOUR TILING PROJECT
+            </h1>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-8">
+            <div class="block-container p-6">
+                <h3 class="text-lg font-bold mb-6 uppercase" style="color: var(--royal-blue);">STEP 1: DRAW YOUR LAYOUT</h3>
+                <div class="flex items-center justify-center">
+                    <div class="progress-step active">1</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">3</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">4</div>
+                </div>
+                <div class="flex justify-between mt-4 text-sm font-bold uppercase">
+                    <span style="color: var(--royal-blue);">LAYOUT</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">DIMENSIONS</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">TILES</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">RESULTS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas and Tools Combined -->
+        <div class="mb-8">
+            <div class="block-container p-6">
+                <!-- Compact Tools Row -->
+                <div class="flex items-center justify-between mb-6 pb-4 border-b-4" style="border-color: var(--royal-blue);">
+                    <h3 class="text-lg font-bold uppercase" style="color: var(--royal-blue);">DRAWING CANVAS</h3>
+                    <div class="flex gap-2">
+                        <button class="tool-button text-xs px-3 py-2" title="Undo">
+                            <i data-lucide="undo-2" class="w-4 h-4 mr-1"></i>
+                            UNDO
+                        </button>
+                        <button class="tool-button text-xs px-3 py-2" title="Redo">
+                            <i data-lucide="redo-2" class="w-4 h-4 mr-1"></i>
+                            REDO
+                        </button>
+                        <button class="tool-button text-xs px-3 py-2" title="Clear">
+                            <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
+                            CLEAR
+                        </button>
+                        <button class="tool-button active text-xs px-3 py-2" title="Draw">
+                            <i data-lucide="pencil" class="w-4 h-4 mr-1"></i>
+                            DRAW
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas Area -->
+                <div class="canvas-container" style="height: 450px; position: relative;">
+                    <!-- Grid Background -->
+                    <div class="canvas-grid w-full h-full absolute inset-0"></div>
+
+                    <!-- SVG Canvas for Drawing -->
+                    <svg class="w-full h-full absolute inset-0" style="z-index: 5;">
+                        <!-- Example Rectangle Shape -->
+                        <rect x="120" y="100" width="280" height="180" class="rectangle-example"></rect>
+
+                        <!-- Corner Nodes with Labels -->
+                        <circle cx="120" cy="100" r="8" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="3"></circle>
+                        <text x="105" y="95" fill="var(--royal-blue)" font-size="12" font-weight="bold">A</text>
+
+                        <circle cx="400" cy="100" r="8" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="3"></circle>
+                        <text x="405" y="95" fill="var(--royal-blue)" font-size="12" font-weight="bold">B</text>
+
+                        <circle cx="400" cy="280" r="8" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="3"></circle>
+                        <text x="405" y="295" fill="var(--royal-blue)" font-size="12" font-weight="bold">C</text>
+
+                        <circle cx="120" cy="280" r="8" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="3"></circle>
+                        <text x="105" y="295" fill="var(--royal-blue)" font-size="12" font-weight="bold">D</text>
+
+                        <!-- Dimension Labels -->
+                        <text x="260" y="90" fill="var(--royal-blue)" font-size="11" font-weight="bold" text-anchor="middle">4.2m</text>
+                        <text x="410" y="190" fill="var(--royal-blue)" font-size="11" font-weight="bold" text-anchor="middle">3.8m</text>
+                    </svg>
+
+                    <!-- Instruction Popup -->
+                    <div class="absolute top-4 right-4" style="z-index: 6;">
+                        <div class="bg-white border-3 border-royal-blue p-3" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                            <p class="font-bold text-xs uppercase" style="color: var(--royal-blue);">
+                                💡 TIP: Drag corners to adjust
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unit Selection & Actions Combined -->
+        <div class="flex flex-col lg:flex-row gap-6 mb-8">
+            <div class="flex-1">
+                <div class="block-container p-4">
+                    <h4 class="font-bold text-sm uppercase mb-3" style="color: var(--royal-blue);">UNITS</h4>
+                    <div class="flex gap-2">
+                        <button class="unit-selector text-sm py-2 px-3">INCH</button>
+                        <button class="unit-selector text-sm py-2 px-3">FEET</button>
+                        <button class="unit-selector active text-sm py-2 px-3">MM</button>
+                        <button class="unit-selector text-sm py-2 px-3">CM</button>
+                        <button class="unit-selector text-sm py-2 px-3">M</button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-4 items-end">
+                <button class="btn-secondary">← BACK</button>
+                <button class="btn-primary">CONTINUE →</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // Tool button interactions
+        document.querySelectorAll('.tool-button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.textContent.includes('DRAW')) {
+                    document.querySelectorAll('.tool-button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Unit selector
+        document.querySelectorAll('.unit-selector').forEach(unit => {
+            unit.addEventListener('click', function() {
+                document.querySelectorAll('.unit-selector').forEach(u => u.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Canvas interaction with visual feedback
+        let nodeCount = 5; // Start after ABCD
+        document.querySelector('svg').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Add new node
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', x);
+            circle.setAttribute('cy', y);
+            circle.setAttribute('r', '8');
+            circle.setAttribute('fill', 'var(--royal-blue)');
+            circle.setAttribute('stroke', 'var(--orange)');
+            circle.setAttribute('stroke-width', '3');
+            circle.style.cursor = 'pointer';
+            this.appendChild(circle);
+
+            // Add label
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', x - 15);
+            text.setAttribute('y', y - 10);
+            text.setAttribute('fill', 'var(--royal-blue)');
+            text.setAttribute('font-size', '12');
+            text.setAttribute('font-weight', 'bold');
+            text.textContent = String.fromCharCode(64 + nodeCount); // E, F, G, etc.
+            this.appendChild(text);
+
+            nodeCount++;
+        });
+    </script>
+</body>
+</html>

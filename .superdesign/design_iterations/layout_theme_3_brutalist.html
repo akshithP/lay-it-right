@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Theme 3 (Neo-Brutalism)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="theme_3_neo_brutalism.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header flex justify-between items-center">
+        <h1 class="text-2xl font-black">LAY-IT-RIGHT</h1>
+        <div class="w-10 h-10 bg-orange-500 border-2 border-black flex items-center justify-center cursor-pointer hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+            <i data-lucide="help-circle" class="w-6 h-6 text-black"></i>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="text-center mb-8">
+            <h2 class="text-5xl font-black text-black mb-2 transform -skew-x-2">
+                CREATE YOUR TILING PROJECT
+            </h2>
+        </div>
+
+        <!-- Step Progress -->
+        <div class="step-card mb-6">
+            <div class="mb-4">
+                <h3 class="text-xl font-black mb-4">STEP 1: LAYOUT SELECTION</h3>
+                <div class="flex items-center justify-between max-w-md">
+                    <div class="flex flex-col items-center">
+                        <div class="w-10 h-10 border-3 border-black bg-orange-500 text-black flex items-center justify-center font-black text-lg shadow-[4px_4px_0px_0px_#1A1A1A]">1</div>
+                        <span class="text-xs mt-2 font-bold">LAYOUT</span>
+                    </div>
+                    <div class="flex-1 h-2 bg-black mx-2"></div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-10 h-10 border-3 border-black bg-gray-300 text-black flex items-center justify-center font-black text-lg">2</div>
+                        <span class="text-xs mt-2 font-bold">DIMENSIONS</span>
+                    </div>
+                    <div class="flex-1 h-2 bg-gray-300 mx-2"></div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-10 h-10 border-3 border-black bg-gray-300 text-black flex items-center justify-center font-black text-lg">3</div>
+                        <span class="text-xs mt-2 font-bold">TILES</span>
+                    </div>
+                    <div class="flex-1 h-2 bg-gray-300 mx-2"></div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-10 h-10 border-3 border-black bg-gray-300 text-black flex items-center justify-center font-black text-lg">4</div>
+                        <span class="text-xs mt-2 font-bold">RESULTS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Draw Custom vs Templates -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="template-card cursor-pointer">
+                <div class="flex items-center mb-3">
+                    <i data-lucide="edit" class="w-8 h-8 text-orange-500 mr-4"></i>
+                    <h3 class="text-xl font-black">DRAW CUSTOM</h3>
+                </div>
+                <p class="text-base font-bold">CREATE EXACT LAYOUT</p>
+            </div>
+            <div class="template-card selected cursor-pointer">
+                <div class="flex items-center mb-3">
+                    <i data-lucide="layout-template" class="w-8 h-8 text-white mr-4"></i>
+                    <h3 class="text-xl font-black">TEMPLATES</h3>
+                </div>
+                <p class="text-base font-bold">PREDEFINED AREAS</p>
+            </div>
+        </div>
+
+        <!-- Template Gallery -->
+        <div class="step-card">
+            <h3 class="text-2xl font-black mb-8">TEMPLATE GALLERY</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Square Template -->
+                <div class="template-card selected cursor-pointer text-center">
+                    <div class="mb-6 flex justify-center">
+                        <div class="w-28 h-28 border-4 border-white relative flex items-center justify-center shadow-[4px_4px_0px_0px_#1A1A1A]">
+                            <span class="text-white font-black text-2xl">a</span>
+                            <div class="absolute bottom-2 left-2">
+                                <span class="text-white text-lg font-black">a</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-black text-xl">SQUARE</h4>
+                </div>
+
+                <!-- Rectangle Template -->
+                <div class="template-card cursor-pointer text-center">
+                    <div class="mb-6 flex justify-center">
+                        <div class="w-36 h-24 border-4 border-black relative flex items-center justify-center bg-white shadow-[4px_4px_0px_0px_#1A1A1A]">
+                            <span class="text-black font-black text-2xl">a</span>
+                            <div class="absolute bottom-2 left-2">
+                                <span class="text-black text-lg font-black">b</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-black text-xl">RECTANGLE</h4>
+                </div>
+
+                <!-- L-Shape Template -->
+                <div class="template-card cursor-pointer text-center">
+                    <div class="mb-6 flex justify-center">
+                        <div class="relative">
+                            <!-- Main L-shape -->
+                            <div class="w-36 h-16 border-4 border-black bg-white relative shadow-[4px_4px_0px_0px_#1A1A1A]">
+                                <span class="absolute top-2 left-2 text-black text-base font-black">b</span>
+                                <span class="absolute top-2 right-2 text-black text-base font-black">f</span>
+                            </div>
+                            <div class="w-20 h-20 border-4 border-black bg-white relative mt-0 shadow-[4px_4px_0px_0px_#1A1A1A]">
+                                <span class="absolute top-2 left-2 text-black text-base font-black">e</span>
+                                <span class="absolute bottom-2 right-2 text-black text-base font-black">d</span>
+                            </div>
+                            <span class="absolute top-0 left-3 text-black text-2xl font-black">a</span>
+                            <span class="absolute bottom-3 left-10 text-black text-2xl font-black">c</span>
+                        </div>
+                    </div>
+                    <h4 class="font-black text-xl">L-SHAPE</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-6 mt-10">
+            <button class="btn-secondary px-10 py-4 font-black text-lg">CANCEL</button>
+            <button class="btn-primary px-10 py-4 font-black text-lg">CONTINUE</button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Add click handlers for templates
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selected class from all cards in the same section
+                const section = this.closest('.grid');
+                section.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+                // Add selected class to clicked card
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

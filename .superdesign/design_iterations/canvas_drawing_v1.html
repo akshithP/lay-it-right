@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Draw Your Layout V1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="canvas_drawing_theme.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-4" style="border-color: var(--royal-blue); background: var(--white);">
+        <div class="text-2xl font-bold" style="color: var(--royal-blue);">LAYITRIGHT</div>
+        <div class="flex gap-4">
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="help-circle" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-6xl">
+        <!-- Title -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4" style="color: var(--royal-blue);">
+                CREATE YOUR TILING PROJECT
+            </h1>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-12">
+            <div class="block-container p-6">
+                <h3 class="text-lg font-bold mb-6 uppercase" style="color: var(--royal-blue);">STEP 1: DRAW YOUR LAYOUT</h3>
+                <div class="flex items-center justify-center">
+                    <div class="progress-step active">1</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">3</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">4</div>
+                </div>
+                <div class="flex justify-between mt-4 text-sm font-bold uppercase">
+                    <span style="color: var(--royal-blue);">LAYOUT</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">DIMENSIONS</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">TILES</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">RESULTS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas Tools Header -->
+        <div class="mb-4">
+            <div class="tools-header flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <span class="font-bold uppercase text-sm" style="color: var(--royal-blue);">CANVAS TOOLS</span>
+                </div>
+                <div class="flex gap-3">
+                    <button class="tool-button" title="Undo Last Step">
+                        <i data-lucide="undo-2" class="w-5 h-5"></i>
+                    </button>
+                    <button class="tool-button" title="Redo">
+                        <i data-lucide="redo-2" class="w-5 h-5"></i>
+                    </button>
+                    <button class="tool-button" title="Clear Canvas">
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
+                    <button class="tool-button active" title="Drawing Mode">
+                        <i data-lucide="pencil" class="w-5 h-5"></i>
+                    </button>
+                    <button class="tool-button" title="Help">
+                        <i data-lucide="help-circle" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas Area -->
+        <div class="mb-8">
+            <div class="canvas-container" style="height: 500px; position: relative;">
+                <!-- Grid Background -->
+                <div class="canvas-grid w-full h-full absolute inset-0"></div>
+
+                <!-- SVG Canvas for Drawing -->
+                <svg class="w-full h-full absolute inset-0" style="z-index: 5;">
+                    <!-- Example Rectangle Shape -->
+                    <rect x="150" y="120" width="300" height="200" class="rectangle-example"></rect>
+
+                    <!-- Corner Nodes -->
+                    <circle cx="150" cy="120" r="8" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="3"></circle>
+                    <circle cx="450" cy="120" r="8" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="3"></circle>
+                    <circle cx="450" cy="320" r="8" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="3"></circle>
+                    <circle cx="150" cy="320" r="8" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="3"></circle>
+                </svg>
+
+                <!-- Instructions Overlay -->
+                <div class="absolute top-4 left-4 right-4 text-center" style="z-index: 6;">
+                    <div class="bg-white border-3 border-royal-blue p-4 inline-block" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                        <p class="font-bold text-sm uppercase" style="color: var(--royal-blue);">
+                            Click to place corner points • Drag nodes to adjust • Click first point to close shape
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unit Selection -->
+        <div class="mb-8">
+            <div class="block-container p-6">
+                <h3 class="text-lg font-bold mb-4 uppercase" style="color: var(--royal-blue);">MEASUREMENT UNITS</h3>
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <button class="unit-selector">INCH</button>
+                    <button class="unit-selector">FEET</button>
+                    <button class="unit-selector active">MM</button>
+                    <button class="unit-selector">CM</button>
+                    <button class="unit-selector">M</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-between gap-6">
+            <button class="btn-secondary">← BACK</button>
+            <button class="btn-primary">CONTINUE →</button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // Tool button interactions
+        document.querySelectorAll('.tool-button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (!this.classList.contains('active')) {
+                    document.querySelectorAll('.tool-button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Unit selector
+        document.querySelectorAll('.unit-selector').forEach(unit => {
+            unit.addEventListener('click', function() {
+                document.querySelectorAll('.unit-selector').forEach(u => u.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Canvas interaction simulation
+        document.querySelector('svg').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Add new node at click position (visual feedback)
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', x);
+            circle.setAttribute('cy', y);
+            circle.setAttribute('r', '8');
+            circle.setAttribute('fill', 'var(--royal-blue)');
+            circle.setAttribute('stroke', 'var(--orange)');
+            circle.setAttribute('stroke-width', '3');
+            circle.style.cursor = 'pointer';
+            this.appendChild(circle);
+        });
+    </script>
+</body>
+</html>

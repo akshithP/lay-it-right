@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Project Creation Theme 4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'DM Sans', sans-serif !important;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Merriweather', serif !important;
+        }
+        
+        :root {
+            --white: #F4F6FF;
+            --yellow: #F3C623;
+            --orange: #EB8317;
+            --royal-blue: #10375C;
+        }
+        
+        body {
+            background: radial-gradient(ellipse at top, rgba(243, 198, 35, 0.15) 0%, var(--white) 50%);
+            color: var(--royal-blue);
+            min-height: 100vh;
+        }
+        
+        .craft-decoration {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--orange), transparent);
+            margin: 1rem auto;
+            position: relative;
+        }
+        
+        .craft-decoration::before {
+            content: '◆';
+            position: absolute;
+            left: 50%;
+            top: -8px;
+            transform: translateX(-50%);
+            color: var(--orange);
+            font-size: 16px;
+        }
+        
+        .progress-step {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: all 0.4s ease;
+            position: relative;
+            border: 3px solid;
+        }
+        
+        .progress-step.active {
+            background: linear-gradient(135deg, var(--royal-blue) 0%, var(--orange) 100%);
+            color: var(--white);
+            border-color: var(--orange);
+            box-shadow: 0 6px 20px rgba(235, 131, 23, 0.4);
+        }
+        
+        .progress-step.inactive {
+            background: var(--white);
+            color: rgba(16, 55, 92, 0.5);
+            border-color: rgba(16, 55, 92, 0.2);
+        }
+        
+        .progress-line {
+            height: 4px;
+            background: rgba(16, 55, 92, 0.1);
+            flex: 1;
+            margin: 0 1.5rem;
+            border-radius: 2px;
+            position: relative;
+        }
+        
+        .progress-line.active {
+            background: linear-gradient(90deg, var(--royal-blue), var(--orange));
+            box-shadow: 0 2px 8px rgba(235, 131, 23, 0.3);
+        }
+        
+        .method-tab {
+            background: rgba(244, 246, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(235, 131, 23, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .method-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(235, 131, 23, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .method-tab:hover::before {
+            opacity: 1;
+        }
+        
+        .method-tab:hover {
+            border-color: var(--orange);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(235, 131, 23, 0.2);
+        }
+        
+        .method-tab.active {
+            border-color: var(--royal-blue);
+            background: rgba(16, 55, 92, 0.05);
+            box-shadow: 0 8px 25px rgba(16, 55, 92, 0.15);
+        }
+        
+        .template-card {
+            background: rgba(244, 246, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(235, 131, 23, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .template-card:hover {
+            border-color: var(--orange);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(235, 131, 23, 0.2);
+        }
+        
+        .template-card.selected {
+            border-color: var(--royal-blue);
+            background: rgba(16, 55, 92, 0.05);
+            box-shadow: 0 8px 25px rgba(16, 55, 92, 0.15);
+        }
+        
+        .template-shape {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--royal-blue);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(235, 131, 23, 0.3);
+        }
+        
+        .template-card:hover .template-shape {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .template-card.selected .template-shape {
+            background: linear-gradient(135deg, var(--royal-blue), var(--orange));
+            color: var(--white);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--royal-blue) 0%, var(--orange) 50%, var(--royal-blue) 100%);
+            background-size: 200% 200%;
+            color: var(--white);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 55, 92, 0.3);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.8s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background: var(--white);
+            color: var(--royal-blue);
+            border: 2px solid rgba(235, 131, 23, 0.3);
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.4s ease;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--orange);
+            background: var(--orange);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(235, 131, 23, 0.3);
+        }
+        
+        .card-container {
+            background: rgba(244, 246, 255, 0.8);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(235, 131, 23, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 6px 25px rgba(16, 55, 92, 0.1);
+        }
+        
+        .icon-badge {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            box-shadow: 0 6px 20px rgba(235, 131, 23, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .method-tab:hover .icon-badge {
+            transform: scale(1.1) rotate(10deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-8 py-6 flex justify-between items-center">
+        <div class="text-3xl font-bold" style="color: var(--royal-blue);">LayItRight</div>
+        <div class="flex gap-4">
+            <button class="p-3 rounded-full border-2 hover:bg-orange-400 hover:bg-opacity-20 transition-all" style="border-color: rgba(235, 131, 23, 0.3);">
+                <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="p-3 rounded-full border-2 hover:bg-orange-400 hover:bg-opacity-20 transition-all" style="border-color: rgba(235, 131, 23, 0.3);">
+                <i data-lucide="help-circle" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-8 py-12 max-w-6xl">
+        <!-- Title -->
+        <div class="text-center mb-12">
+            <div class="craft-decoration"></div>
+            <h1 class="text-4xl font-bold mb-6" style="color: var(--royal-blue);">
+                Create Your Tiling Project
+            </h1>
+            <p class="text-xl leading-relaxed max-w-3xl mx-auto" style="color: rgba(16, 55, 92, 0.7);">
+                Begin your journey to the perfect tile installation. Choose how you'd like to define your space.
+            </p>
+            <div class="craft-decoration"></div>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-16">
+            <div class="card-container p-8">
+                <h3 class="text-xl font-bold mb-8 text-center" style="color: var(--royal-blue);">Step 1: Layout Selection</h3>
+                <div class="flex items-center justify-center">
+                    <div class="progress-step active">1</div>
+                    <div class="progress-line active"></div>
+                    <div class="progress-step inactive">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step inactive">3</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step inactive">4</div>
+                </div>
+                <div class="flex justify-between mt-4 text-sm font-medium">
+                    <span style="color: var(--royal-blue);">Layout Design</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">Measurements</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">Tile Selection</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">Final Results</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Method Selection -->
+        <div class="grid md:grid-cols-2 gap-12 mb-16">
+            <div class="method-tab">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="icon-badge">
+                        <i data-lucide="pencil" class="w-8 h-8" style="color: var(--royal-blue);"></i>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-center" style="color: var(--royal-blue);">Draw Custom Layout</h3>
+                <p class="text-center leading-relaxed" style="color: rgba(16, 55, 92, 0.7);">
+                    Create your exact room layout with precision. Perfect for unique spaces with custom angles, obstacles, or architectural features.
+                </p>
+            </div>
+            
+            <div class="method-tab active">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="icon-badge">
+                        <i data-lucide="layout-template" class="w-8 h-8" style="color: var(--royal-blue);"></i>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-center" style="color: var(--royal-blue);">Choose Template</h3>
+                <p class="text-center leading-relaxed" style="color: rgba(16, 55, 92, 0.7);">
+                    Start with a common room shape. Quick and easy for standard layouts like rectangles, L-shapes, and more.
+                </p>
+            </div>
+        </div>
+
+        <!-- Canvas/Templates Area -->
+        <div class="mb-16">
+            <div class="card-container p-10">
+                <h3 class="text-2xl font-bold mb-8 text-center" style="color: var(--royal-blue);">Handpicked Room Templates</h3>
+                
+                <!-- Template Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+                    <div class="template-card selected">
+                        <div class="template-shape">▢</div>
+                        <span class="font-semibold text-lg mb-1" style="color: var(--royal-blue);">Rectangle</span>
+                        <span class="text-sm" style="color: rgba(16, 55, 92, 0.6);">Classic room</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">⌐</div>
+                        <span class="font-semibold text-lg mb-1" style="color: var(--royal-blue);">L-Shape</span>
+                        <span class="text-sm" style="color: rgba(16, 55, 92, 0.6);">Corner layout</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">⊔</div>
+                        <span class="font-semibold text-lg mb-1" style="color: var(--royal-blue);">U-Shape</span>
+                        <span class="text-sm" style="color: rgba(16, 55, 92, 0.6);">Open concept</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">┬</div>
+                        <span class="font-semibold text-lg mb-1" style="color: var(--royal-blue);">T-Shape</span>
+                        <span class="text-sm" style="color: rgba(16, 55, 92, 0.6);">Hallway style</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">≡</div>
+                        <span class="font-semibold text-lg mb-1" style="color: var(--royal-blue);">Galley</span>
+                        <span class="text-sm" style="color: rgba(16, 55, 92, 0.6);">Kitchen style</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">+</div>
+                        <span class="font-semibold text-lg mb-1" style="color: var(--royal-blue);">Browse More</span>
+                        <span class="text-sm" style="color: rgba(16, 55, 92, 0.6);">View all shapes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-6">
+            <button class="btn-secondary">Cancel Project</button>
+            <button class="btn-primary">Continue to Dimensions</button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        
+        // Tab switching functionality
+        document.querySelectorAll('.method-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

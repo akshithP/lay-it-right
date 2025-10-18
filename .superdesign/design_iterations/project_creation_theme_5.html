@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Project Creation Theme 5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Geist', sans-serif !important;
+        }
+        
+        .mono {
+            font-family: 'Geist Mono', monospace !important;
+        }
+        
+        :root {
+            --white: #F4F6FF;
+            --yellow: #F3C623;
+            --orange: #EB8317;
+            --royal-blue: #10375C;
+        }
+        
+        body {
+            background: linear-gradient(90deg, transparent 1px, var(--white) 1px),
+                        linear-gradient(var(--white) 1px, transparent 1px),
+                        var(--white);
+            background-size: 20px 20px;
+            color: var(--royal-blue);
+            min-height: 100vh;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 1px;
+            background: rgba(16, 55, 92, 0.1);
+            border-radius: 4px;
+            padding: 1px;
+            margin: 1rem 0;
+        }
+        
+        .tech-cell {
+            background: var(--white);
+            height: 8px;
+            animation: techScan 4s ease-in-out infinite;
+        }
+        
+        .tech-cell:nth-child(3n) {
+            animation-delay: 0.5s;
+        }
+        
+        .tech-cell:nth-child(5n) {
+            animation-delay: 1s;
+        }
+        
+        @keyframes techScan {
+            0%, 100% { background: var(--white); }
+            50% { background: var(--yellow); opacity: 0.7; }
+        }
+        
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--royal-blue);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .progress-step.active {
+            background: var(--royal-blue);
+            color: var(--white);
+            box-shadow: 0 0 0 4px rgba(243, 198, 35, 0.3);
+        }
+        
+        .progress-step.active::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 1px solid var(--yellow);
+            animation: techPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes techPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .progress-line {
+            height: 2px;
+            background: rgba(16, 55, 92, 0.2);
+            flex: 1;
+            margin: 0 1rem;
+            position: relative;
+        }
+        
+        .progress-line.active {
+            background: var(--royal-blue);
+        }
+        
+        .progress-line.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: var(--yellow);
+            animation: progressFlow 1.5s ease-out;
+        }
+        
+        @keyframes progressFlow {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        
+        .method-tab {
+            background: var(--white);
+            border: 2px solid rgba(16, 55, 92, 0.2);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .method-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--yellow);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .method-tab:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .method-tab:hover {
+            border-color: var(--yellow);
+            box-shadow: 0 4px 12px rgba(243, 198, 35, 0.2);
+        }
+        
+        .method-tab.active {
+            border-color: var(--royal-blue);
+            background: rgba(16, 55, 92, 0.02);
+        }
+        
+        .method-tab.active::before {
+            transform: scaleX(1);
+            background: var(--royal-blue);
+        }
+        
+        .template-card {
+            background: var(--white);
+            border: 1px solid rgba(16, 55, 92, 0.2);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .template-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--orange);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .template-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .template-card:hover {
+            border-color: var(--orange);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(235, 131, 23, 0.2);
+        }
+        
+        .template-card.selected {
+            border-color: var(--royal-blue);
+            background: rgba(16, 55, 92, 0.02);
+        }
+        
+        .template-card.selected::before {
+            transform: scaleX(1);
+            background: var(--royal-blue);
+        }
+        
+        .template-shape {
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            border: 2px solid var(--royal-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--royal-blue);
+            position: relative;
+        }
+        
+        .template-card:hover .template-shape {
+            border-color: var(--orange);
+            background: var(--yellow);
+        }
+        
+        .template-card.selected .template-shape {
+            background: var(--royal-blue);
+            color: var(--white);
+            border-color: var(--yellow);
+        }
+        
+        .btn-primary {
+            background: var(--royal-blue);
+            color: var(--white);
+            border: 2px solid var(--royal-blue);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            background: var(--orange);
+            border-color: var(--orange);
+            box-shadow: 0 0 0 4px rgba(235, 131, 23, 0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--white);
+            color: var(--royal-blue);
+            border: 2px solid rgba(16, 55, 92, 0.3);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--yellow);
+            background: var(--yellow);
+            box-shadow: 0 0 0 4px rgba(243, 198, 35, 0.3);
+        }
+        
+        .card-container {
+            background: rgba(244, 246, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 55, 92, 0.2);
+            box-shadow: 0 2px 8px rgba(16, 55, 92, 0.1);
+        }
+        
+        .metric-display {
+            font-family: 'Geist Mono', monospace;
+            background: rgba(16, 55, 92, 0.05);
+            border: 1px solid rgba(16, 55, 92, 0.2);
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            color: var(--royal-blue);
+            text-transform: uppercase;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--orange);
+            animation: statusBlink 2s ease-in-out infinite;
+        }
+        
+        @keyframes statusBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b" style="border-color: rgba(16, 55, 92, 0.2); background: rgba(244, 246, 255, 0.9); backdrop-filter: blur(10px);">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 border-2 flex items-center justify-center" style="border-color: var(--royal-blue);">
+                <span class="text-sm font-mono font-bold" style="color: var(--royal-blue);">LR</span>
+            </div>
+            <div class="text-xl font-semibold mono" style="color: var(--royal-blue);">LayItRight</div>
+            <div class="metric-display ml-4">v2.1.0</div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2">
+                <div class="status-indicator"></div>
+                <span class="text-xs mono" style="color: var(--royal-blue);">SYSTEM_READY</span>
+            </div>
+            <button class="p-2 border hover:bg-opacity-10 hover:bg-gray-500 transition-all" style="border-color: rgba(16, 55, 92, 0.2);">
+                <i data-lucide="arrow-left" class="w-4 h-4" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="p-2 border hover:bg-opacity-10 hover:bg-gray-500 transition-all" style="border-color: rgba(16, 55, 92, 0.2);">
+                <i data-lucide="help-circle" class="w-4 h-4" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-6xl">
+        <!-- Title -->
+        <div class="text-center mb-8">
+            <div class="tech-grid max-w-md mx-auto mb-4">
+                <div class="tech-cell"></div>
+                <div class="tech-cell"></div>
+                <div class="tech-cell"></div>
+                <div class="tech-cell"></div>
+                <div class="tech-cell"></div>
+                <div class="tech-cell"></div>
+                <div class="tech-cell"></div>
+                <div class="tech-cell"></div>
+                <div class="tech-cell"></div>
+                <div class="tech-cell"></div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4 mono" style="color: var(--royal-blue);">
+                CREATE_PROJECT.EXE
+            </h1>
+            <p class="text-lg mono" style="color: rgba(16, 55, 92, 0.7);">
+                INITIALIZE_LAYOUT_SELECTION_MODULE
+            </p>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-12">
+            <div class="card-container p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold mono" style="color: var(--royal-blue);">STEP_01: LAYOUT_SELECTION</h3>
+                    <div class="metric-display">PROGRESS: 25%</div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="progress-step active">1</div>
+                    <div class="progress-line active"></div>
+                    <div class="progress-step">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">3</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">4</div>
+                </div>
+                <div class="flex justify-between mt-3 text-xs mono font-medium">
+                    <span style="color: var(--royal-blue);">LAYOUT.SELECT</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">DIMENSIONS.INPUT</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">TILES.CONFIG</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">RESULTS.RENDER</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Method Selection -->
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+            <div class="method-tab">
+                <div class="flex items-center justify-center mb-4">
+                    <div class="w-16 h-16 border-2 flex items-center justify-center" style="border-color: var(--orange); background: var(--yellow);">
+                        <i data-lucide="pencil" class="w-8 h-8" style="color: var(--royal-blue);"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-center mono" style="color: var(--royal-blue);">CUSTOM_DRAW.MODE</h3>
+                <p class="text-center text-sm mono" style="color: rgba(16, 55, 92, 0.7);">MANUAL_LAYOUT_CREATION</p>
+                <div class="flex justify-center mt-3">
+                    <div class="metric-display">PRECISION: HIGH</div>
+                </div>
+            </div>
+            
+            <div class="method-tab active">
+                <div class="flex items-center justify-center mb-4">
+                    <div class="w-16 h-16 border-2 flex items-center justify-center" style="border-color: var(--white); background: var(--royal-blue);">
+                        <i data-lucide="layout-template" class="w-8 h-8" style="color: var(--white);"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-center mono" style="color: var(--royal-blue);">TEMPLATE.SELECT</h3>
+                <p class="text-center text-sm mono" style="color: rgba(16, 55, 92, 0.7);">PREDEFINED_LAYOUTS</p>
+                <div class="flex justify-center mt-3">
+                    <div class="metric-display">STATUS: ACTIVE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas/Templates Area -->
+        <div class="mb-8">
+            <div class="card-container p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-semibold mono" style="color: var(--royal-blue);">TEMPLATE.DATABASE</h3>
+                    <div class="flex items-center gap-2">
+                        <div class="status-indicator"></div>
+                        <span class="text-xs mono" style="color: var(--royal-blue);">LOADED</span>
+                    </div>
+                </div>
+                
+                <!-- Template Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="template-card selected">
+                        <div class="template-shape">▢</div>
+                        <span class="font-medium mono text-sm" style="color: var(--royal-blue);">RECTANGLE</span>
+                        <span class="text-xs mono mt-1" style="color: rgba(16, 55, 92, 0.6);">ID_001</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">⌐</div>
+                        <span class="font-medium mono text-sm" style="color: var(--royal-blue);">L_SHAPE</span>
+                        <span class="text-xs mono mt-1" style="color: rgba(16, 55, 92, 0.6);">ID_002</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">⊔</div>
+                        <span class="font-medium mono text-sm" style="color: var(--royal-blue);">U_SHAPE</span>
+                        <span class="text-xs mono mt-1" style="color: rgba(16, 55, 92, 0.6);">ID_003</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">┬</div>
+                        <span class="font-medium mono text-sm" style="color: var(--royal-blue);">T_SHAPE</span>
+                        <span class="text-xs mono mt-1" style="color: rgba(16, 55, 92, 0.6);">ID_004</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">≡</div>
+                        <span class="font-medium mono text-sm" style="color: var(--royal-blue);">GALLEY</span>
+                        <span class="text-xs mono mt-1" style="color: rgba(16, 55, 92, 0.6);">ID_005</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">+</div>
+                        <span class="font-medium mono text-sm" style="color: var(--royal-blue);">LOAD_MORE</span>
+                        <span class="text-xs mono mt-1" style="color: rgba(16, 55, 92, 0.6);">EXPAND</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-4">
+            <button class="btn-secondary">CANCEL_SESSION</button>
+            <button class="btn-primary">EXECUTE_CONTINUE()</button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        
+        // Tab switching functionality
+        document.querySelectorAll('.method-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

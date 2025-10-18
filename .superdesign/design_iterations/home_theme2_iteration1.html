@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Home Page V1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        :root {
+            --white: #F4F6FF;
+            --yellow: #F3C623;
+            --orange: #EB8317;
+            --royal-blue: #10375C;
+        }
+        
+        body {
+            background: var(--yellow);
+            color: var(--royal-blue);
+        }
+        
+        .block-container {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            border-radius: 0;
+            box-shadow: 8px 8px 0px var(--royal-blue);
+        }
+        
+        .hero-title {
+            background: var(--white);
+            border: 6px solid var(--royal-blue);
+            padding: 2rem;
+            box-shadow: 12px 12px 0px var(--orange);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-block {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .feature-block:hover {
+            box-shadow: 6px 6px 0px var(--orange);
+            transform: translate(-2px, -2px);
+        }
+        
+        .tile-preview {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
+        }
+        
+        .tile {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--royal-blue);
+            animation: blockFloat 3s ease-in-out infinite;
+        }
+        
+        .tile:nth-child(odd) {
+            background: var(--royal-blue);
+            animation-delay: 0s;
+        }
+        
+        .tile:nth-child(even) {
+            background: var(--orange);
+            animation-delay: 0.5s;
+        }
+        
+        @keyframes blockFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        .btn-primary {
+            background: var(--royal-blue);
+            color: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 1.5rem 3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 8px 8px 0px var(--orange);
+            transform: translate(-4px, -4px);
+        }
+        
+        .header-btn {
+            background: var(--white);
+            border: 3px solid var(--royal-blue);
+            padding: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        
+        .header-btn:hover {
+            box-shadow: 4px 4px 0px var(--orange);
+            transform: translate(-2px, -2px);
+        }
+        
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: var(--orange);
+            border: 4px solid var(--royal-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-4" style="border-color: var(--royal-blue); background: var(--white);">
+        <div class="text-3xl font-bold" style="color: var(--royal-blue);">LAYITRIGHT</div>
+        <div class="flex gap-4">
+            <button class="header-btn">
+                <i data-lucide="settings" class="w-6 h-6" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="header-btn">
+                <i data-lucide="help-circle" class="w-6 h-6" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-7xl">
+        <!-- Hero Section -->
+        <div class="hero-title">
+            <h1 class="text-6xl font-bold mb-6" style="color: var(--royal-blue);">
+                WELCOME TO LAYITRIGHT
+            </h1>
+            <p class="text-2xl font-bold uppercase" style="color: var(--royal-blue);">
+                DIY TILING CALCULATOR & PLANNER
+            </p>
+        </div>
+
+        <!-- Split Layout -->
+        <div class="grid lg:grid-cols-2 gap-12 mb-12">
+            <!-- Left: Features -->
+            <div class="space-y-8">
+                <div class="feature-block">
+                    <div class="icon-box mx-auto">
+                        <i data-lucide="ruler" class="w-10 h-10" style="color: var(--white);"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center uppercase" style="color: var(--royal-blue);">ROOM DIMENSIONS</h3>
+                    <p class="text-center font-medium" style="color: rgba(16, 55, 92, 0.8);">MEASURE & INPUT YOUR SPACE</p>
+                </div>
+
+                <div class="feature-block">
+                    <div class="icon-box mx-auto">
+                        <i data-lucide="grid-3x3" class="w-10 h-10" style="color: var(--white);"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center uppercase" style="color: var(--royal-blue);">TILE CALCULATIONS</h3>
+                    <p class="text-center font-medium" style="color: rgba(16, 55, 92, 0.8);">EXACT TILE COUNT & WASTE %</p>
+                </div>
+
+                <div class="feature-block">
+                    <div class="icon-box mx-auto">
+                        <i data-lucide="layout-template" class="w-10 h-10" style="color: var(--white);"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center uppercase" style="color: var(--royal-blue);">PATTERN PREVIEW</h3>
+                    <p class="text-center font-medium" style="color: rgba(16, 55, 92, 0.8);">LIVE VISUAL TILE LAYOUT</p>
+                </div>
+
+                <div class="feature-block">
+                    <div class="icon-box mx-auto">
+                        <i data-lucide="percent" class="w-10 h-10" style="color: var(--white);"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center uppercase" style="color: var(--royal-blue);">WASTE ESTIMATION</h3>
+                    <p class="text-center font-medium" style="color: rgba(16, 55, 92, 0.8);">PROFESSIONAL CALCULATIONS</p>
+                </div>
+            </div>
+
+            <!-- Right: Animated Tile Preview -->
+            <div class="flex flex-col items-center justify-center">
+                <div class="tile-preview mb-8">
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                    <div class="tile"></div>
+                </div>
+                <p class="text-xl font-bold uppercase" style="color: var(--royal-blue);">[LIVE TILE PREVIEW]</p>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="text-center">
+            <button class="btn-primary">
+                START PROJECT
+            </button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+/* Theme 2: Playful Rounded - Friendly and approachable */
+:root {
+  --background: #F4F6FF;
+  --foreground: #10375C;
+  --card: #F4F6FF;
+  --card-foreground: #10375C;
+  --popover: #F4F6FF;
+  --popover-foreground: #10375C;
+  --primary: #F3C623;
+  --primary-foreground: #10375C;
+  --secondary: #EB8317;
+  --secondary-foreground: #F4F6FF;
+  --muted: rgba(243, 198, 35, 0.1);
+  --muted-foreground: rgba(16, 55, 92, 0.7);
+  --accent: #10375C;
+  --accent-foreground: #F4F6FF;
+  --destructive: #dc2626;
+  --destructive-foreground: #F4F6FF;
+  --border: rgba(243, 198, 35, 0.2);
+  --input: rgba(243, 198, 35, 0.08);
+  --ring: #EB8317;
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Poppins', serif;
+  --font-mono: 'Space Mono', monospace;
+  --radius: 1.5rem;
+  --shadow-sm: 0 3px 8px rgba(243, 198, 35, 0.15);
+  --shadow: 0 6px 16px rgba(243, 198, 35, 0.2);
+  --shadow-lg: 0 12px 28px rgba(243, 198, 35, 0.25);
+  --shadow-xl: 0 20px 40px rgba(243, 198, 35, 0.3);
+  --spacing: 1.25rem;
+  --tracking-normal: 0em;
+}

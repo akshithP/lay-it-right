@@ -1,0 +1,277 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    --background: 244 246 255; /* #F4F6FF */
+    --foreground: 16 55 92; /* #10375C */
+
+    --card: 244 246 255;
+    --card-foreground: 16 55 92;
+
+    --popover: 244 246 255;
+    --popover-foreground: 16 55 92;
+
+    --primary: 243 198 35; /* #F3C623 */
+    --primary-foreground: 16 55 92;
+
+    --secondary: 235 131 23; /* #EB8317 */
+    --secondary-foreground: 244 246 255;
+
+    --muted: 244 246 255;
+    --muted-foreground: 107 114 128;
+
+    --accent: 235 131 23;
+    --accent-foreground: 244 246 255;
+
+    --destructive: 239 68 68;
+    --destructive-foreground: 244 246 255;
+
+    --border: 229 231 235;
+    --input: 229 231 235;
+    --ring: 243 198 35;
+
+    --radius: 0rem;
+
+    /* Design-specific variables */
+    --layit-white: #F4F6FF;
+    --layit-yellow: #F3C623;
+    --layit-orange: #EB8317;
+    --layit-royal-blue: #10375C;
+  }
+
+  .dark {
+    --background: 16 55 92;
+    --foreground: 244 246 255;
+
+    --card: 16 55 92;
+    --card-foreground: 244 246 255;
+
+    --popover: 16 55 92;
+    --popover-foreground: 244 246 255;
+
+    --primary: 243 198 35;
+    --primary-foreground: 16 55 92;
+
+    --secondary: 235 131 23;
+    --secondary-foreground: 244 246 255;
+
+    --muted: 55 65 81;
+    --muted-foreground: 156 163 175;
+
+    --accent: 235 131 23;
+    --accent-foreground: 244 246 255;
+
+    --destructive: 239 68 68;
+    --destructive-foreground: 244 246 255;
+
+    --border: 55 65 81;
+    --input: 55 65 81;
+    --ring: 243 198 35;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+  body {
+    @apply bg-layit-yellow text-layit-blue font-mono;
+  }
+}
+
+@layer components {
+  .layit-btn-primary {
+    @apply bg-layit-yellow text-layit-blue hover:bg-layit-orange transition-colors duration-200;
+  }
+
+  .layit-btn-secondary {
+    @apply bg-layit-orange text-layit-light hover:bg-layit-yellow hover:text-layit-blue transition-colors duration-200;
+  }
+
+  .layit-card {
+    @apply bg-card border border-border rounded-lg shadow-sm p-6;
+  }
+
+  .layit-input {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Design-specific components */
+  .hero-container {
+    @apply bg-layit-white border-6 border-layit-blue p-8 mb-8 text-center relative;
+  }
+
+  .hero-container::before {
+    content: '';
+    @apply absolute -top-1.5 -left-1.5 -right-1.5 -bottom-1.5 border-3 border-layit-orange -z-10;
+  }
+
+  .split-container {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[45vh];
+  }
+
+  .info-panel {
+    @apply bg-layit-white border-4 border-layit-blue p-8 flex flex-col justify-center;
+  }
+
+  .preview-panel {
+    @apply bg-layit-blue border-4 border-layit-orange p-8 flex flex-col items-center justify-center;
+  }
+
+  .feature-item {
+    @apply flex items-center p-4 border-2 border-layit-blue mb-4;
+    background: rgba(16, 55, 92, 0.05);
+  }
+
+  .feature-icon {
+    @apply w-12 h-12 bg-layit-orange border-2 border-layit-blue flex items-center justify-center mr-4;
+  }
+
+  .tile-grid-large {
+    @apply grid grid-cols-8 gap-1 p-8 bg-layit-white border-3 border-layit-yellow;
+  }
+
+  .tile-large {
+    @apply w-9 h-9 border-2 border-layit-blue;
+    animation: blockPulse 2s ease-in-out infinite;
+  }
+
+  .tile-large:nth-child(3n) {
+    @apply bg-layit-yellow;
+    animation-delay: 0.2s;
+  }
+
+  .tile-large:nth-child(3n+1) {
+    @apply bg-layit-orange;
+    animation-delay: 0.4s;
+  }
+
+  .tile-large:nth-child(3n+2) {
+    @apply bg-layit-white;
+    animation-delay: 0.6s;
+  }
+
+  .cta-mega {
+    @apply bg-layit-blue text-layit-white border-6 border-layit-orange px-16 py-8 font-bold uppercase transition-all duration-200 text-2xl mx-auto block;
+    letter-spacing: 3px;
+  }
+
+  .cta-mega:hover {
+    box-shadow: 12px 12px 0px var(--layit-yellow);
+    transform: translate(-6px, -6px);
+    @apply bg-layit-orange;
+  }
+
+  .header-block {
+    @apply bg-layit-white border-b-6 border-layit-blue px-8 py-4;
+  }
+
+  .brand-title {
+    @apply text-3xl font-bold text-layit-blue;
+    text-shadow: 3px 3px 0px var(--layit-orange);
+  }
+
+  /* Tile Selection Step Styles */
+  .block-container {
+    @apply bg-layit-white border-4 border-layit-blue;
+    box-shadow: 8px 8px 0px var(--layit-royal-blue);
+  }
+
+  .section-title {
+    @apply text-xl font-bold uppercase text-layit-blue;
+  }
+
+  .info-text {
+    @apply text-sm font-semibold text-layit-blue/70;
+  }
+
+  .preset-button {
+    @apply bg-layit-white border-4 border-layit-blue p-4 text-center cursor-pointer transition-all duration-200 font-bold uppercase;
+  }
+
+  .preset-button:hover {
+    @apply bg-layit-orange text-layit-white;
+    box-shadow: 3px 3px 0px var(--layit-royal-blue);
+    transform: translate(-1px, -1px);
+  }
+
+  .preset-button.active {
+    @apply bg-layit-blue text-layit-white;
+    box-shadow: 3px 3px 0px var(--layit-orange);
+  }
+
+  .dimension-input {
+    @apply bg-layit-white border-4 border-layit-blue text-layit-blue font-bold text-2xl p-4 text-center;
+  }
+
+  .dimension-input:focus {
+    outline: none !important;
+    box-shadow: 6px 6px 0px var(--layit-orange);
+    transform: translate(-2px, -2px);
+  }
+
+  .tile-preview {
+    @apply bg-layit-white border-4 border-layit-blue p-8 min-h-[300px] flex flex-col items-center justify-center;
+  }
+
+  .grout-preview {
+    @apply bg-layit-white border-4 border-layit-blue p-8 min-h-[300px] flex flex-col items-center justify-center;
+  }
+
+  .btn-primary {
+    @apply bg-layit-blue text-layit-white border-4 border-layit-blue px-10 py-4 font-bold uppercase transition-all duration-200 tracking-wider cursor-pointer;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    box-shadow: 4px 4px 0px var(--layit-orange);
+    transform: translate(-2px, -2px);
+  }
+
+  .btn-secondary {
+    @apply bg-layit-white text-layit-blue border-4 border-layit-blue px-10 py-4 font-bold uppercase transition-all duration-200 tracking-wider cursor-pointer;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-layit-orange text-layit-white;
+    box-shadow: 4px 4px 0px var(--layit-royal-blue);
+    transform: translate(-2px, -2px);
+  }
+
+  .unit-selector {
+    @apply bg-layit-white border-4 border-layit-blue px-4 py-2 font-bold cursor-pointer;
+  }
+
+  .tile-size-display {
+    @apply text-2xl font-bold uppercase my-4;
+  }
+
+  .tile-label {
+    @apply text-sm font-semibold opacity-70;
+  }
+
+  /* Custom animations */
+  @keyframes blockPulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+  }
+}
+
+@layer utilities {
+  .text-shadow-orange {
+    text-shadow: 3px 3px 0px var(--layit-orange);
+  }
+
+  .text-shadow-blue {
+    text-shadow: 3px 3px 0px var(--layit-royal-blue);
+  }
+}

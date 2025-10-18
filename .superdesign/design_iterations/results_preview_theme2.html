@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Results & Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        :root {
+            --white: #F4F6FF;
+            --yellow: #F3C623;
+            --orange: #EB8317;
+            --royal-blue: #10375C;
+        }
+        
+        body {
+            background: var(--yellow);
+            color: var(--royal-blue);
+        }
+        
+        .block-container {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            border-radius: 0;
+            box-shadow: 8px 8px 0px var(--royal-blue);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .calculation-block {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .calculation-block.highlight {
+            background: var(--royal-blue);
+            color: var(--white);
+            box-shadow: 8px 8px 0px var(--orange);
+        }
+        
+        .calc-number {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .calc-label {
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .calc-subtitle {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+        }
+        
+        .preview-container {
+            background: var(--royal-blue);
+            border: 6px solid var(--orange);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 500px;
+        }
+        
+        .tile-canvas {
+            background: var(--white);
+            border: 4px solid var(--yellow);
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2px;
+            padding: 10px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .canvas-tile {
+            background: var(--yellow);
+            border: 1px solid var(--royal-blue);
+            aspect-ratio: 1;
+        }
+        
+        .canvas-tile.full {
+            background: var(--yellow);
+        }
+        
+        .canvas-tile.cut {
+            background: var(--orange);
+        }
+        
+        .canvas-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .control-btn {
+            background: var(--white);
+            color: var(--royal-blue);
+            border: 3px solid var(--royal-blue);
+            padding: 0.75rem 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+        
+        .control-btn:hover {
+            background: var(--orange);
+            color: var(--white);
+            box-shadow: 3px 3px 0px var(--yellow);
+            transform: translate(-1px, -1px);
+        }
+        
+        .project-summary {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: between;
+            padding: 0.75rem 0;
+            border-bottom: 2px solid rgba(16, 55, 92, 0.1);
+        }
+        
+        .summary-row:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            background: rgba(16, 55, 92, 0.05);
+            margin: 0 -2rem;
+            padding: 1rem 2rem;
+        }
+        
+        .summary-label {
+            font-weight: 600;
+            flex: 1;
+        }
+        
+        .summary-value {
+            font-weight: 700;
+            color: var(--orange);
+        }
+        
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--royal-blue);
+            color: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 1rem 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 4px 4px 0px var(--orange);
+            transform: translate(-2px, -2px);
+        }
+        
+        .btn-secondary {
+            background: var(--white);
+            color: var(--royal-blue);
+            border: 4px solid var(--royal-blue);
+            padding: 1rem 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--orange);
+            color: var(--white);
+            box-shadow: 4px 4px 0px var(--royal-blue);
+            transform: translate(-2px, -2px);
+        }
+        
+        .btn-success {
+            background: var(--orange);
+            color: var(--white);
+            border: 4px solid var(--orange);
+            padding: 1rem 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        
+        .btn-success:hover {
+            background: var(--yellow);
+            color: var(--royal-blue);
+            box-shadow: 4px 4px 0px var(--royal-blue);
+            transform: translate(-2px, -2px);
+        }
+        
+        .legend {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--white);
+        }
+        
+        .legend-full {
+            background: var(--yellow);
+        }
+        
+        .legend-cut {
+            background: var(--orange);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-4" style="border-color: var(--royal-blue); background: var(--white);">
+        <div class="text-2xl font-bold" style="color: var(--royal-blue);">LAYITRIGHT</div>
+        <div class="flex gap-4">
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="home" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="help-circle" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-7xl">
+        <!-- Title -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4" style="color: var(--royal-blue);">
+                PROJECT RESULTS
+            </h1>
+            <p class="text-lg font-bold uppercase" style="color: var(--royal-blue);">RECTANGLE ROOM • 300×300MM TILES • GRID PATTERN</p>
+        </div>
+
+        <!-- Results Grid -->
+        <div class="results-grid">
+            <div class="calculation-block">
+                <div class="calc-number" style="color: var(--orange);">65</div>
+                <div class="calc-label">TOTAL TILES</div>
+                <div class="calc-subtitle">NEEDED FOR PROJECT</div>
+            </div>
+            
+            <div class="calculation-block">
+                <div class="calc-number" style="color: var(--orange);">19.76</div>
+                <div class="calc-label">AREA M²</div>
+                <div class="calc-subtitle">212.6 SQ FT</div>
+            </div>
+            
+            <div class="calculation-block highlight">
+                <div class="calc-number">58</div>
+                <div class="calc-label">FULL TILES</div>
+                <div class="calc-subtitle">89% OF TOTAL</div>
+            </div>
+            
+            <div class="calculation-block highlight">
+                <div class="calc-number">7</div>
+                <div class="calc-label">CUT TILES</div>
+                <div class="calc-subtitle">11% OF TOTAL</div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <!-- Interactive Preview -->
+            <div class="preview-container">
+                <h3 class="text-2xl font-bold mb-4 uppercase text-center" style="color: var(--white);">INTERACTIVE PREVIEW</h3>
+                
+                <div class="canvas-controls">
+                    <button class="control-btn">ZOOM IN</button>
+                    <button class="control-btn">ZOOM OUT</button>
+                    <button class="control-btn">RESET</button>
+                    <button class="control-btn">PAN</button>
+                </div>
+                
+                <div class="tile-canvas">
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile cut"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile cut"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile cut"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile cut"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile cut"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile full"></div>
+                    <div class="canvas-tile cut"></div>
+                    <div class="canvas-tile cut"></div>
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color legend-full"></div>
+                        <span>FULL TILES</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-cut"></div>
+                        <span>CUT TILES</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Summary -->
+            <div class="project-summary">
+                <h3 class="text-2xl font-bold mb-6 uppercase" style="color: var(--royal-blue);">PROJECT SUMMARY</h3>
+                
+                <div class="summary-row">
+                    <span class="summary-label">ROOM LAYOUT:</span>
+                    <span class="summary-value">RECTANGLE</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">DIMENSIONS:</span>
+                    <span class="summary-value">5.2M × 3.8M</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">TILE SIZE:</span>
+                    <span class="summary-value">300 × 300MM</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">GROUT WIDTH:</span>
+                    <span class="summary-value">2MM</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">PATTERN:</span>
+                    <span class="summary-value">GRID</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">WASTE FACTOR:</span>
+                    <span class="summary-value">5%</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">RECOMMENDED ORDER:</span>
+                    <span class="summary-value" style="color: var(--royal-blue); font-size: 1.2rem;">68 TILES</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn-secondary">← MODIFY PROJECT</button>
+            <button class="btn-success">SAVE PROJECT</button>
+            <button class="btn-primary">NEW PROJECT</button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        
+        // Interactive controls
+        document.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log(this.textContent + ' clicked');
+                // Add interactive functionality here
+            });
+        });
+        
+        // Tile hover effects
+        document.querySelectorAll('.canvas-tile').forEach(tile => {
+            tile.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+                this.style.zIndex = '10';
+            });
+            
+            tile.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.zIndex = '1';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Home Page V3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        :root {
+            --white: #F4F6FF;
+            --yellow: #F3C623;
+            --orange: #EB8317;
+            --royal-blue: #10375C;
+        }
+        
+        body {
+            background: var(--yellow);
+            color: var(--royal-blue);
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            min-height: 90vh;
+            gap: 2rem;
+        }
+        
+        .welcome-block {
+            grid-column: 1 / -1;
+            background: var(--white);
+            border: 6px solid var(--royal-blue);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .welcome-block::after {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            right: -12px;
+            bottom: -12px;
+            border: 6px solid var(--orange);
+            z-index: -1;
+        }
+        
+        .info-column {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .preview-column {
+            background: var(--royal-blue);
+            border: 4px solid var(--white);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .action-row {
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-box {
+            background: var(--yellow);
+            border: 3px solid var(--royal-blue);
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .feature-box:hover {
+            background: var(--orange);
+            color: var(--white);
+        }
+        
+        .stats-section {
+            background: rgba(16, 55, 92, 0.1);
+            border: 2px solid var(--royal-blue);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .tile-showcase {
+            background: var(--white);
+            border: 4px solid var(--yellow);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tile-patterns {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .pattern-demo {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            padding: 1rem;
+            border: 2px solid var(--royal-blue);
+        }
+        
+        .mini-tile {
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--royal-blue);
+        }
+        
+        .pattern-demo:nth-child(1) .mini-tile:nth-child(odd) {
+            background: var(--royal-blue);
+        }
+        
+        .pattern-demo:nth-child(1) .mini-tile:nth-child(even) {
+            background: var(--orange);
+        }
+        
+        .pattern-demo:nth-child(2) .mini-tile:nth-child(4n), 
+        .pattern-demo:nth-child(2) .mini-tile:nth-child(4n-1) {
+            background: var(--yellow);
+        }
+        
+        .pattern-demo:nth-child(2) .mini-tile:nth-child(4n-2), 
+        .pattern-demo:nth-child(2) .mini-tile:nth-child(4n-3) {
+            background: var(--orange);
+        }
+        
+        .pattern-demo:nth-child(3) .mini-tile:nth-child(6n), 
+        .pattern-demo:nth-child(3) .mini-tile:nth-child(6n-2), 
+        .pattern-demo:nth-child(3) .mini-tile:nth-child(6n-4) {
+            background: var(--royal-blue);
+        }
+        
+        .pattern-demo:nth-child(3) .mini-tile {
+            background: var(--white);
+        }
+        
+        .mega-cta {
+            background: var(--royal-blue);
+            color: var(--white);
+            border: 8px solid var(--orange);
+            padding: 2rem 4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .mega-cta::before {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: -16px;
+            right: -16px;
+            bottom: -16px;
+            border: 4px solid var(--yellow);
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+        
+        .mega-cta:hover::before {
+            top: -24px;
+            left: -24px;
+            right: -24px;
+            bottom: -24px;
+        }
+        
+        .mega-cta:hover {
+            background: var(--orange);
+            transform: scale(1.05);
+        }
+        
+        .header-mega {
+            background: var(--white);
+            border-bottom: 8px solid var(--royal-blue);
+            padding: 1rem 2rem;
+            position: relative;
+        }
+        
+        .header-mega::after {
+            content: '';
+            position: absolute;
+            bottom: -16px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: var(--orange);
+        }
+        
+        .brand-mega {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--royal-blue);
+            text-shadow: 4px 4px 0px var(--yellow);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-mega flex justify-between items-center">
+        <div class="brand-mega">LAYITRIGHT</div>
+        <div class="flex gap-4">
+            <button class="p-3 border-4 bg-yellow hover:bg-orange" style="border-color: var(--royal-blue); background: var(--yellow);">
+                <i data-lucide="help-circle" class="w-8 h-8" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-7xl">
+        <div class="main-grid">
+            <!-- Welcome Section -->
+            <div class="welcome-block">
+                <h1 class="text-6xl font-bold mb-4" style="color: var(--royal-blue); text-shadow: 3px 3px 0px var(--orange);">
+                    WELCOME TO LAYITRIGHT
+                </h1>
+                <p class="text-2xl font-bold uppercase tracking-wider" style="color: var(--royal-blue);">
+                    PLAN, CALCULATE & VISUALIZE YOUR TILING PROJECT LIKE A PRO
+                </p>
+            </div>
+
+            <!-- Info Column -->
+            <div class="info-column">
+                <div>
+                    <h2 class="text-3xl font-bold mb-6 uppercase" style="color: var(--royal-blue);">FEATURES</h2>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-box">
+                            <h3 class="font-bold uppercase text-sm" style="color: var(--royal-blue);">ROOM DIMENSIONS</h3>
+                        </div>
+                        <div class="feature-box">
+                            <h3 class="font-bold uppercase text-sm" style="color: var(--royal-blue);">TILE CALCULATIONS</h3>
+                        </div>
+                        <div class="feature-box">
+                            <h3 class="font-bold uppercase text-sm" style="color: var(--royal-blue);">PATTERN PREVIEW</h3>
+                        </div>
+                        <div class="feature-box">
+                            <h3 class="font-bold uppercase text-sm" style="color: var(--royal-blue);">WASTE ESTIMATION</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <h3 class="text-lg font-bold mb-3 uppercase" style="color: var(--royal-blue);">QUICK STATS</h3>
+                    <div class="space-y-2">
+                        <p class="font-bold"><span style="color: var(--orange);">✓</span> PRECISION: 99.9% ACCURATE</p>
+                        <p class="font-bold"><span style="color: var(--orange);">✓</span> REAL-TIME CALCULATIONS</p>
+                        <p class="font-bold"><span style="color: var(--orange);">✓</span> PROFESSIONAL RESULTS</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Column -->
+            <div class="preview-column">
+                <div class="tile-showcase">
+                    <h3 class="text-xl font-bold mb-4 text-center uppercase" style="color: var(--royal-blue);">TILE PATTERNS</h3>
+                    <div class="tile-patterns">
+                        <div class="pattern-demo">
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                        </div>
+                        <div class="pattern-demo">
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                        </div>
+                        <div class="pattern-demo">
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                            <div class="mini-tile"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold uppercase text-center" style="color: var(--white);">GRID • BRICK • HERRINGBONE</h3>
+            </div>
+
+            <!-- Action Row -->
+            <div class="action-row">
+                <button class="mega-cta">
+                    START PROJECT
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

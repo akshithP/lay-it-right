@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Theme 4: Warm Craftsman</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="theme_4_warm_craftsman.css">
+    <style>
+        * {
+            font-family: var(--font-sans) !important;
+        }
+        
+        h1, h2, h3 {
+            font-family: var(--font-serif) !important;
+        }
+        
+        .tile-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 3px;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(235, 131, 23, 0.1), rgba(243, 198, 35, 0.1));
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        
+        .tile {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius);
+            animation: tileGlow 4s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tile:nth-child(odd) {
+            background: linear-gradient(45deg, var(--primary), rgba(16, 55, 92, 0.8));
+            animation-delay: 0s;
+        }
+        
+        .tile:nth-child(even) {
+            background: linear-gradient(45deg, var(--secondary), rgba(235, 131, 23, 0.8));
+            animation-delay: 0.7s;
+        }
+        
+        .tile::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.8s;
+        }
+        
+        @keyframes tileGlow {
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 0 0 rgba(235, 131, 23, 0.3);
+            }
+            50% { 
+                transform: scale(1.02); 
+                box-shadow: 0 4px 12px rgba(235, 131, 23, 0.4);
+            }
+        }
+        
+        .hero-bg {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(243, 198, 35, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(235, 131, 23, 0.15) 0%, transparent 50%),
+                var(--background);
+        }
+        
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(235, 131, 23, 0.05), transparent);
+            border-radius: var(--radius);
+            pointer-events: none;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--secondary);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--primary) 100%);
+            background-size: 200% 200%;
+            color: var(--primary-foreground);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+            background-position: right center;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.8s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .craft-decoration {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 1rem auto;
+            position: relative;
+        }
+        
+        .craft-decoration::before {
+            content: '◆';
+            position: absolute;
+            left: 50%;
+            top: -8px;
+            transform: translateX(-50%);
+            color: var(--accent);
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body class="hero-bg min-h-screen">
+    <!-- Header -->
+    <header class="w-full px-8 py-6 flex justify-between items-center">
+        <div class="text-3xl font-bold" style="color: var(--foreground); font-family: var(--font-serif);">LayItRight</div>
+        <div class="flex gap-4">
+            <button class="p-3 rounded-full hover:bg-opacity-20 hover:bg-orange-400 transition-all duration-300" style="border: 1px solid var(--border);">
+                <i data-lucide="help-circle" class="w-5 h-5" style="color: var(--muted-foreground);"></i>
+            </button>
+            <button class="p-3 rounded-full hover:bg-opacity-20 hover:bg-orange-400 transition-all duration-300" style="border: 1px solid var(--border);">
+                <i data-lucide="menu" class="w-5 h-5" style="color: var(--muted-foreground);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content - Split Screen Hero -->
+    <main class="container mx-auto px-8 py-12 max-w-7xl min-h-screen flex flex-col">
+        <div class="grid lg:grid-cols-2 gap-16 flex-1">
+            <!-- Left: Info Section -->
+            <div class="flex flex-col justify-center space-y-10">
+                <div>
+                    <div class="craft-decoration"></div>
+                    <h1 class="text-5xl font-bold mb-8" style="color: var(--foreground);">
+                        Welcome to LayItRight
+                    </h1>
+                    <p class="text-2xl mb-10 max-w-2xl leading-relaxed" style="color: var(--muted-foreground);">
+                        Plan, calculate & visualize your tiling project like a pro. Crafted for DIY enthusiasts who value precision and quality.
+                    </p>
+                    <div class="craft-decoration"></div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="flex items-center gap-5 p-4 rounded-lg hover:bg-opacity-10 hover:bg-orange-400 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, var(--secondary), var(--accent)); box-shadow: var(--shadow-sm);">
+                            <span class="text-xl font-bold" style="color: var(--primary-foreground);">✓</span>
+                        </div>
+                        <span class="text-xl font-medium" style="color: var(--foreground);">Room dimensions</span>
+                    </div>
+                    <div class="flex items-center gap-5 p-4 rounded-lg hover:bg-opacity-10 hover:bg-orange-400 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, var(--secondary), var(--accent)); box-shadow: var(--shadow-sm);">
+                            <span class="text-xl font-bold" style="color: var(--primary-foreground);">✓</span>
+                        </div>
+                        <span class="text-xl font-medium" style="color: var(--foreground);">Tile calculations</span>
+                    </div>
+                    <div class="flex items-center gap-5 p-4 rounded-lg hover:bg-opacity-10 hover:bg-orange-400 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, var(--secondary), var(--accent)); box-shadow: var(--shadow-sm);">
+                            <span class="text-xl font-bold" style="color: var(--primary-foreground);">✓</span>
+                        </div>
+                        <span class="text-xl font-medium" style="color: var(--foreground);">Pattern preview</span>
+                    </div>
+                    <div class="flex items-center gap-5 p-4 rounded-lg hover:bg-opacity-10 hover:bg-orange-400 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, var(--secondary), var(--accent)); box-shadow: var(--shadow-sm);">
+                            <span class="text-xl font-bold" style="color: var(--primary-foreground);">✓</span>
+                        </div>
+                        <span class="text-xl font-medium" style="color: var(--foreground);">Waste estimation</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Animated Tile Preview -->
+            <div class="flex flex-col items-center justify-center">
+                <div class="feature-card p-12 w-full max-w-lg">
+                    <div class="tile-grid mb-8">
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                    </div>
+                    <p class="text-center text-xl font-medium italic" style="color: var(--muted-foreground);">Animated Pattern Preview</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="text-center py-12">
+            <button class="btn-primary px-20 py-8 text-2xl font-semibold">
+                Start Your Project
+            </button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

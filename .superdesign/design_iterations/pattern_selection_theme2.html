@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Pattern Selection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        :root {
+            --white: #F4F6FF;
+            --yellow: #F3C623;
+            --orange: #EB8317;
+            --royal-blue: #10375C;
+        }
+        
+        body {
+            background: var(--yellow);
+            color: var(--royal-blue);
+        }
+        
+        .block-container {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            border-radius: 0;
+            box-shadow: 8px 8px 0px var(--royal-blue);
+        }
+        
+        .progress-step {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--royal-blue);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .progress-step.active {
+            background: var(--royal-blue);
+            color: var(--white);
+            box-shadow: 4px 4px 0px var(--orange);
+        }
+        
+        .progress-line {
+            height: 6px;
+            background: var(--white);
+            border: 3px solid var(--royal-blue);
+            flex: 1;
+            margin: 0 1rem;
+        }
+        
+        .progress-line.active {
+            background: var(--royal-blue);
+        }
+        
+        .pattern-card {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 2rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .pattern-card:hover {
+            box-shadow: 6px 6px 0px var(--orange);
+            transform: translate(-2px, -2px);
+        }
+        
+        .pattern-card.selected {
+            background: var(--royal-blue);
+            color: var(--white);
+            box-shadow: 6px 6px 0px var(--orange);
+        }
+        
+        .pattern-demo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--royal-blue);
+            display: grid;
+            padding: 8px;
+            background: var(--white);
+        }
+        
+        .pattern-card.selected .pattern-demo {
+            border-color: var(--orange);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Grid Pattern */
+        .pattern-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+        }
+        
+        .pattern-grid .tile {
+            background: var(--yellow);
+            border: 1px solid var(--royal-blue);
+        }
+        
+        /* Brick Pattern */
+        .pattern-brick {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
+        .brick-row {
+            display: flex;
+            gap: 2px;
+            height: 18px;
+        }
+        
+        .brick-row:nth-child(even) {
+            margin-left: 15px;
+        }
+        
+        .brick-tile {
+            flex: 1;
+            background: var(--yellow);
+            border: 1px solid var(--royal-blue);
+            min-width: 25px;
+        }
+        
+        /* Herringbone Pattern */
+        .pattern-herringbone {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .herring-tile {
+            position: absolute;
+            width: 30px;
+            height: 15px;
+            background: var(--yellow);
+            border: 1px solid var(--royal-blue);
+        }
+        
+        .herring-tile:nth-child(1) { top: 10px; left: 10px; transform: rotate(0deg); }
+        .herring-tile:nth-child(2) { top: 10px; left: 25px; transform: rotate(90deg); }
+        .herring-tile:nth-child(3) { top: 25px; left: 40px; transform: rotate(0deg); }
+        .herring-tile:nth-child(4) { top: 40px; left: 10px; transform: rotate(90deg); }
+        .herring-tile:nth-child(5) { top: 40px; left: 25px; transform: rotate(0deg); }
+        .herring-tile:nth-child(6) { top: 55px; left: 55px; transform: rotate(90deg); }
+        
+        /* Diagonal Pattern */
+        .pattern-diagonal {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            transform: rotate(45deg);
+            margin: 20px;
+        }
+        
+        .pattern-diagonal .tile {
+            background: var(--yellow);
+            border: 1px solid var(--royal-blue);
+        }
+        
+        .pattern-description {
+            background: rgba(16, 55, 92, 0.1);
+            border: 2px solid var(--royal-blue);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .pattern-card.selected .pattern-description {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--orange);
+        }
+        
+        .live-preview {
+            background: var(--royal-blue);
+            border: 4px solid var(--orange);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .preview-large {
+            width: 200px;
+            height: 200px;
+            background: var(--white);
+            border: 3px solid var(--yellow);
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 3px;
+            padding: 10px;
+        }
+        
+        .preview-tile {
+            background: var(--yellow);
+            border: 1px solid var(--royal-blue);
+        }
+        
+        .btn-primary {
+            background: var(--royal-blue);
+            color: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 4px 4px 0px var(--orange);
+            transform: translate(-2px, -2px);
+        }
+        
+        .btn-secondary {
+            background: var(--white);
+            color: var(--royal-blue);
+            border: 4px solid var(--royal-blue);
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--orange);
+            color: var(--white);
+            box-shadow: 4px 4px 0px var(--royal-blue);
+            transform: translate(-2px, -2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-4" style="border-color: var(--royal-blue); background: var(--white);">
+        <div class="text-2xl font-bold" style="color: var(--royal-blue);">LAYITRIGHT</div>
+        <div class="flex gap-4">
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="help-circle" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-7xl">
+        <!-- Title -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4" style="color: var(--royal-blue);">
+                CHOOSE LAYOUT PATTERN
+            </h1>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-12">
+            <div class="block-container p-6">
+                <h3 class="text-lg font-bold mb-6 uppercase" style="color: var(--royal-blue);">STEP 4: LAYOUT PATTERN</h3>
+                <div class="flex items-center justify-center">
+                    <div class="progress-step">1</div>
+                    <div class="progress-line active"></div>
+                    <div class="progress-step">2</div>
+                    <div class="progress-line active"></div>
+                    <div class="progress-step">3</div>
+                    <div class="progress-line active"></div>
+                    <div class="progress-step active">4</div>
+                </div>
+                <div class="flex justify-between mt-4 text-sm font-bold uppercase">
+                    <span style="color: rgba(16, 55, 92, 0.5);">LAYOUT</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">DIMENSIONS</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">TILES</span>
+                    <span style="color: var(--royal-blue);">PATTERN</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid lg:grid-cols-3 gap-8 mb-8">
+            <!-- Pattern Options -->
+            <div class="lg:col-span-2">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Grid Pattern -->
+                    <div class="pattern-card selected">
+                        <div class="pattern-demo pattern-grid">
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 uppercase">GRID</h3>
+                        <p class="text-sm font-medium">CLASSIC STRAIGHT LAYOUT</p>
+                        <div class="pattern-description">
+                            <p class="text-xs font-bold">EASIEST TO INSTALL</p>
+                            <p class="text-xs">MINIMAL WASTE</p>
+                        </div>
+                    </div>
+
+                    <!-- Brick Pattern -->
+                    <div class="pattern-card">
+                        <div class="pattern-demo pattern-brick">
+                            <div class="brick-row">
+                                <div class="brick-tile"></div>
+                                <div class="brick-tile"></div>
+                                <div class="brick-tile"></div>
+                            </div>
+                            <div class="brick-row">
+                                <div class="brick-tile"></div>
+                                <div class="brick-tile"></div>
+                            </div>
+                            <div class="brick-row">
+                                <div class="brick-tile"></div>
+                                <div class="brick-tile"></div>
+                                <div class="brick-tile"></div>
+                            </div>
+                            <div class="brick-row">
+                                <div class="brick-tile"></div>
+                                <div class="brick-tile"></div>
+                            </div>
+                            <div class="brick-row">
+                                <div class="brick-tile"></div>
+                                <div class="brick-tile"></div>
+                                <div class="brick-tile"></div>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 uppercase">BRICK</h3>
+                        <p class="text-sm font-medium">RUNNING BOND PATTERN</p>
+                        <div class="pattern-description">
+                            <p class="text-xs font-bold">POPULAR CHOICE</p>
+                            <p class="text-xs">MEDIUM DIFFICULTY</p>
+                        </div>
+                    </div>
+
+                    <!-- Herringbone Pattern -->
+                    <div class="pattern-card">
+                        <div class="pattern-demo pattern-herringbone">
+                            <div class="herring-tile"></div>
+                            <div class="herring-tile"></div>
+                            <div class="herring-tile"></div>
+                            <div class="herring-tile"></div>
+                            <div class="herring-tile"></div>
+                            <div class="herring-tile"></div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 uppercase">HERRINGBONE</h3>
+                        <p class="text-sm font-medium">ZIGZAG V-PATTERN</p>
+                        <div class="pattern-description">
+                            <p class="text-xs font-bold">PREMIUM LOOK</p>
+                            <p class="text-xs">ADVANCED INSTALL</p>
+                        </div>
+                    </div>
+
+                    <!-- Diagonal Pattern -->
+                    <div class="pattern-card">
+                        <div class="pattern-demo pattern-diagonal">
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 uppercase">DIAGONAL</h3>
+                        <p class="text-sm font-medium">45° ROTATED GRID</p>
+                        <div class="pattern-description">
+                            <p class="text-xs font-bold">DYNAMIC LOOK</p>
+                            <p class="text-xs">MORE CUTTING</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Preview -->
+            <div class="live-preview">
+                <h3 class="text-2xl font-bold mb-6 uppercase text-center" style="color: var(--white);">LIVE PREVIEW</h3>
+                
+                <div class="preview-large mb-6">
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-lg font-bold mb-2" style="color: var(--white);">GRID PATTERN</div>
+                    <div class="text-sm font-bold" style="color: var(--yellow);">300×300MM TILES</div>
+                    <div class="text-sm font-bold" style="color: var(--yellow);">2MM GROUT</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-between">
+            <button class="btn-secondary">← BACK</button>
+            <button class="btn-primary">CALCULATE RESULTS →</button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        
+        // Pattern selection
+        document.querySelectorAll('.pattern-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.pattern-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // Update preview title
+                const patternName = this.querySelector('h3').textContent;
+                document.querySelector('.live-preview .text-lg').textContent = patternName + ' PATTERN';
+            });
+        });
+    </script>
+</body>
+</html>

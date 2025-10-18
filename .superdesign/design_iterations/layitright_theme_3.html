@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Theme 3: Bold Geometric</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="theme_3_bold_geometric.css">
+    <style>
+        * {
+            font-family: var(--font-sans) !important;
+        }
+        
+        .tile-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1px;
+            padding: 1rem;
+            background: var(--foreground);
+            border-radius: var(--radius);
+        }
+        
+        .tile {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius);
+            animation: tileSlide 2s ease-in-out infinite;
+            position: relative;
+        }
+        
+        .tile:nth-child(odd) {
+            background: var(--primary);
+            animation-delay: 0s;
+        }
+        
+        .tile:nth-child(even) {
+            background: var(--accent);
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes tileSlide {
+            0%, 100% { 
+                transform: translateX(0px) rotateZ(0deg); 
+                box-shadow: 0 0 0 rgba(16, 55, 92, 0.3);
+            }
+            50% { 
+                transform: translateX(3px) rotateZ(2deg); 
+                box-shadow: 0 4px 8px rgba(16, 55, 92, 0.4);
+            }
+        }
+        
+        .hero-bg {
+            background: linear-gradient(45deg, var(--background) 0%, rgba(244, 246, 255, 0.95) 25%, var(--background) 50%, rgba(244, 246, 255, 0.95) 75%, var(--background) 100%);
+            background-size: 40px 40px;
+        }
+        
+        .feature-card {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            border: 2px solid var(--primary);
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-normal);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-xl);
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        .section-divider {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="hero-bg min-h-screen">
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-2" style="border-color: var(--border);">
+        <div class="text-2xl font-bold tracking-tight" style="color: var(--foreground);">LAYITRIGHT</div>
+        <div class="flex gap-2">
+            <button class="p-2 border-2 border-transparent hover:border-current transition-all" style="border-radius: var(--radius); color: var(--muted-foreground);">
+                <i data-lucide="help-circle" class="w-5 h-5"></i>
+            </button>
+            <button class="p-2 border-2 border-transparent hover:border-current transition-all" style="border-radius: var(--radius); color: var(--muted-foreground);">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content - Split Screen Hero -->
+    <main class="container mx-auto px-6 py-8 max-w-7xl min-h-screen flex flex-col">
+        <div class="grid lg:grid-cols-2 gap-12 flex-1">
+            <!-- Left: Info Section -->
+            <div class="flex flex-col justify-center space-y-8">
+                <div>
+                    <div class="section-divider mb-6"></div>
+                    <h1 class="text-5xl font-bold mb-6 tracking-tight uppercase" style="color: var(--foreground);">
+                        WELCOME TO LAYITRIGHT
+                    </h1>
+                    <p class="text-xl mb-8 font-medium leading-relaxed" style="color: var(--muted-foreground);">
+                        PLAN, CALCULATE & VISUALIZE YOUR TILING PROJECT LIKE A PRO.
+                    </p>
+                    <div class="section-divider"></div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 p-3 border-l-4 hover:bg-opacity-5 hover:bg-gray-500 transition-all" style="border-color: var(--accent);">
+                        <div class="w-8 h-8 flex items-center justify-center" style="background: var(--accent); border-radius: var(--radius);">
+                            <span class="font-bold text-sm" style="color: var(--primary-foreground);">✓</span>
+                        </div>
+                        <span class="font-semibold uppercase text-sm tracking-wide" style="color: var(--foreground);">ROOM DIMENSIONS</span>
+                    </div>
+                    <div class="flex items-center gap-4 p-3 border-l-4 hover:bg-opacity-5 hover:bg-gray-500 transition-all" style="border-color: var(--accent);">
+                        <div class="w-8 h-8 flex items-center justify-center" style="background: var(--accent); border-radius: var(--radius);">
+                            <span class="font-bold text-sm" style="color: var(--primary-foreground);">✓</span>
+                        </div>
+                        <span class="font-semibold uppercase text-sm tracking-wide" style="color: var(--foreground);">TILE CALCULATIONS</span>
+                    </div>
+                    <div class="flex items-center gap-4 p-3 border-l-4 hover:bg-opacity-5 hover:bg-gray-500 transition-all" style="border-color: var(--accent);">
+                        <div class="w-8 h-8 flex items-center justify-center" style="background: var(--accent); border-radius: var(--radius);">
+                            <span class="font-bold text-sm" style="color: var(--primary-foreground);">✓</span>
+                        </div>
+                        <span class="font-semibold uppercase text-sm tracking-wide" style="color: var(--foreground);">PATTERN PREVIEW</span>
+                    </div>
+                    <div class="flex items-center gap-4 p-3 border-l-4 hover:bg-opacity-5 hover:bg-gray-500 transition-all" style="border-color: var(--accent);">
+                        <div class="w-8 h-8 flex items-center justify-center" style="background: var(--accent); border-radius: var(--radius);">
+                            <span class="font-bold text-sm" style="color: var(--primary-foreground);">✓</span>
+                        </div>
+                        <span class="font-semibold uppercase text-sm tracking-wide" style="color: var(--foreground);">WASTE ESTIMATION</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Animated Tile Preview -->
+            <div class="flex flex-col items-center justify-center">
+                <div class="feature-card p-8 w-full max-w-md">
+                    <div class="tile-grid mb-4">
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                        <div class="tile"></div>
+                    </div>
+                    <p class="text-center text-sm font-bold uppercase tracking-wide" style="color: var(--muted-foreground);">[MORPHING TILES]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="text-center py-8">
+            <button class="btn-primary px-12 py-4 text-lg font-bold">
+                START PROJECT
+            </button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

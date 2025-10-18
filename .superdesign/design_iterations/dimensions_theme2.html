@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Dimensions Input</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        :root {
+            --white: #F4F6FF;
+            --yellow: #F3C623;
+            --orange: #EB8317;
+            --royal-blue: #10375C;
+        }
+        
+        body {
+            background: var(--yellow);
+            color: var(--royal-blue);
+        }
+        
+        .block-container {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            border-radius: 0;
+            box-shadow: 8px 8px 0px var(--royal-blue);
+        }
+        
+        .progress-step {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--royal-blue);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .progress-step.active {
+            background: var(--royal-blue);
+            color: var(--white);
+            box-shadow: 4px 4px 0px var(--orange);
+        }
+        
+        .progress-line {
+            height: 6px;
+            background: var(--white);
+            border: 3px solid var(--royal-blue);
+            flex: 1;
+            margin: 0 1rem;
+        }
+        
+        .progress-line.active {
+            background: var(--royal-blue);
+        }
+        
+        .input-group {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-input {
+            background: var(--white);
+            border: 3px solid var(--royal-blue);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-align: center;
+            width: 150px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--orange);
+            box-shadow: 0 0 0 3px rgba(235, 131, 23, 0.3);
+        }
+        
+        .unit-toggle {
+            background: var(--orange);
+            color: var(--white);
+            border: 3px solid var(--royal-blue);
+            padding: 1rem 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        
+        .unit-toggle.inactive {
+            background: var(--white);
+            color: var(--royal-blue);
+        }
+        
+        .unit-toggle:hover {
+            box-shadow: 3px 3px 0px var(--royal-blue);
+            transform: translate(-1px, -1px);
+        }
+        
+        .room-preview {
+            background: var(--royal-blue);
+            border: 4px solid var(--orange);
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+        
+        .room-shape {
+            width: 200px;
+            height: 150px;
+            background: var(--white);
+            border: 4px solid var(--yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .dimension-label {
+            position: absolute;
+            background: var(--orange);
+            color: var(--white);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .dimension-label.top {
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dimension-label.right {
+            right: -35px;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+        }
+        
+        .btn-primary {
+            background: var(--royal-blue);
+            color: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 4px 4px 0px var(--orange);
+            transform: translate(-2px, -2px);
+        }
+        
+        .btn-secondary {
+            background: var(--white);
+            color: var(--royal-blue);
+            border: 4px solid var(--royal-blue);
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--orange);
+            color: var(--white);
+            box-shadow: 4px 4px 0px var(--royal-blue);
+            transform: translate(-2px, -2px);
+        }
+        
+        .calculation-display {
+            background: rgba(16, 55, 92, 0.1);
+            border: 2px solid var(--royal-blue);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-4" style="border-color: var(--royal-blue); background: var(--white);">
+        <div class="text-2xl font-bold" style="color: var(--royal-blue);">LAYITRIGHT</div>
+        <div class="flex gap-4">
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="help-circle" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-6xl">
+        <!-- Title -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4" style="color: var(--royal-blue);">
+                ENTER ROOM DIMENSIONS
+            </h1>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-12">
+            <div class="block-container p-6">
+                <h3 class="text-lg font-bold mb-6 uppercase" style="color: var(--royal-blue);">STEP 2: DIMENSIONS</h3>
+                <div class="flex items-center justify-center">
+                    <div class="progress-step">1</div>
+                    <div class="progress-line active"></div>
+                    <div class="progress-step active">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">3</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">4</div>
+                </div>
+                <div class="flex justify-between mt-4 text-sm font-bold uppercase">
+                    <span style="color: rgba(16, 55, 92, 0.5);">LAYOUT</span>
+                    <span style="color: var(--royal-blue);">DIMENSIONS</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">TILES</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">RESULTS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <!-- Left: Input Form -->
+            <div class="space-y-6">
+                <!-- Length Input -->
+                <div class="input-group">
+                    <h3 class="text-xl font-bold mb-4 uppercase" style="color: var(--royal-blue);">LENGTH</h3>
+                    <div class="flex items-center gap-4">
+                        <input type="number" class="form-input" placeholder="0" value="5.2">
+                        <div class="flex">
+                            <button class="unit-toggle">M</button>
+                            <button class="unit-toggle inactive">FT</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Width Input -->
+                <div class="input-group">
+                    <h3 class="text-xl font-bold mb-4 uppercase" style="color: var(--royal-blue);">WIDTH</h3>
+                    <div class="flex items-center gap-4">
+                        <input type="number" class="form-input" placeholder="0" value="3.8">
+                        <div class="flex">
+                            <button class="unit-toggle">M</button>
+                            <button class="unit-toggle inactive">FT</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Area Calculation Display -->
+                <div class="calculation-display">
+                    <h4 class="font-bold uppercase mb-2" style="color: var(--royal-blue);">CALCULATED AREA</h4>
+                    <div class="text-3xl font-bold" style="color: var(--orange);">19.76 M²</div>
+                    <div class="text-sm font-medium mt-1" style="color: var(--royal-blue);">212.6 SQ FT</div>
+                </div>
+            </div>
+
+            <!-- Right: Room Preview -->
+            <div class="room-preview">
+                <div class="room-shape">
+                    <div class="dimension-label top">5.2M</div>
+                    <div class="dimension-label right">3.8M</div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold mb-2" style="color: var(--royal-blue);">RECTANGLE</div>
+                        <div class="text-lg font-bold" style="color: var(--orange);">19.76 M²</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-between">
+            <button class="btn-secondary">← BACK</button>
+            <button class="btn-primary">CONTINUE →</button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        
+        // Unit toggle functionality
+        document.querySelectorAll('.unit-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const parent = this.closest('.flex');
+                parent.querySelectorAll('.unit-toggle').forEach(t => {
+                    t.classList.add('inactive');
+                });
+                this.classList.remove('inactive');
+            });
+        });
+        
+        // Auto-calculate area when inputs change
+        const lengthInput = document.querySelector('input[value="5.2"]');
+        const widthInput = document.querySelector('input[value="3.8"]');
+        
+        function calculateArea() {
+            const length = parseFloat(lengthInput.value) || 0;
+            const width = parseFloat(widthInput.value) || 0;
+            const area = length * width;
+            document.querySelector('.text-3xl').textContent = area.toFixed(2) + ' M²';
+            document.querySelector('.text-sm').textContent = (area * 10.764).toFixed(1) + ' SQ FT';
+            document.querySelector('.room-shape .text-lg').textContent = area.toFixed(2) + ' M²';
+        }
+        
+        lengthInput.addEventListener('input', calculateArea);
+        widthInput.addEventListener('input', calculateArea);
+    </script>
+</body>
+</html>

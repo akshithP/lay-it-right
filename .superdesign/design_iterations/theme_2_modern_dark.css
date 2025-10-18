@@ -1,0 +1,118 @@
+/* Theme 2: Modern Dark Professional */
+:root {
+  --background: #0F172A;
+  --foreground: #F8FAFC;
+  --card: #1E293B;
+  --card-foreground: #F8FAFC;
+  --popover: #334155;
+  --popover-foreground: #F8FAFC;
+  --primary: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #10B981;
+  --secondary-foreground: #FFFFFF;
+  --muted: #475569;
+  --muted-foreground: #94A3B8;
+  --accent: #8B5CF6;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #334155;
+  --input: #1E293B;
+  --ring: #3B82F6;
+  --step-active: #3B82F6;
+  --step-inactive: #475569;
+  --template-selected: #3B82F6;
+  --template-unselected: #1E293B;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --spacing: 1rem;
+  --header-bg: #020617;
+  --main-bg: #0F172A;
+  --card-bg: #1E293B;
+  --button-primary: #3B82F6;
+  --button-secondary: #10B981;
+}
+
+body {
+  background: var(--main-bg) !important;
+  font-family: var(--font-sans) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--foreground) !important;
+}
+
+.header {
+  background: var(--header-bg) !important;
+  color: var(--foreground) !important;
+  padding: 1rem !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.main-content {
+  background: var(--main-bg) !important;
+  min-height: 100vh !important;
+  padding: 2rem !important;
+}
+
+.step-card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  padding: 1.5rem !important;
+  margin-bottom: 1rem !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.template-card {
+  background: var(--template-unselected) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  padding: 1rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.template-card:hover {
+  border-color: var(--primary) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.template-card.selected {
+  background: var(--template-selected) !important;
+  color: white !important;
+  border-color: var(--primary) !important;
+}
+
+.btn-primary {
+  background: var(--button-primary) !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: var(--radius) !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-primary:hover {
+  background: #2563EB !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-secondary {
+  background: transparent !important;
+  color: var(--foreground) !important;
+  border: 1px solid var(--border) !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: var(--radius) !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-secondary:hover {
+  background: var(--card-bg) !important;
+}

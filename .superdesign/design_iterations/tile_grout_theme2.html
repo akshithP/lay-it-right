@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Tile & Grout Selection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        :root {
+            --white: #F4F6FF;
+            --yellow: #F3C623;
+            --orange: #EB8317;
+            --royal-blue: #10375C;
+        }
+        
+        body {
+            background: var(--yellow);
+            color: var(--royal-blue);
+        }
+        
+        .block-container {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            border-radius: 0;
+            box-shadow: 8px 8px 0px var(--royal-blue);
+        }
+        
+        .progress-step {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--royal-blue);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .progress-step.active {
+            background: var(--royal-blue);
+            color: var(--white);
+            box-shadow: 4px 4px 0px var(--orange);
+        }
+        
+        .progress-line {
+            height: 6px;
+            background: var(--white);
+            border: 3px solid var(--royal-blue);
+            flex: 1;
+            margin: 0 1rem;
+        }
+        
+        .progress-line.active {
+            background: var(--royal-blue);
+        }
+        
+        .tile-section {
+            background: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tile-size-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tile-size-card {
+            background: var(--white);
+            border: 3px solid var(--royal-blue);
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .tile-size-card:hover {
+            box-shadow: 3px 3px 0px var(--orange);
+            transform: translate(-1px, -1px);
+        }
+        
+        .tile-size-card.selected {
+            background: var(--royal-blue);
+            color: var(--white);
+            box-shadow: 3px 3px 0px var(--orange);
+        }
+        
+        .tile-visual {
+            width: 60px;
+            height: 60px;
+            background: var(--yellow);
+            border: 2px solid var(--royal-blue);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .tile-size-card.selected .tile-visual {
+            background: var(--orange);
+            color: var(--white);
+        }
+        
+        .dimension-input {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-input {
+            background: var(--white);
+            border: 3px solid var(--royal-blue);
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            text-align: center;
+            width: 100px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--orange);
+            box-shadow: 0 0 0 3px rgba(235, 131, 23, 0.3);
+        }
+        
+        .grout-width-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        
+        .grout-option {
+            background: var(--white);
+            border: 3px solid var(--royal-blue);
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .grout-option:hover {
+            box-shadow: 3px 3px 0px var(--orange);
+            transform: translate(-1px, -1px);
+        }
+        
+        .grout-option.selected {
+            background: var(--royal-blue);
+            color: var(--white);
+            box-shadow: 3px 3px 0px var(--orange);
+        }
+        
+        .grout-visual {
+            width: 40px;
+            height: 40px;
+            background: var(--yellow);
+            border: 2px solid var(--royal-blue);
+            margin: 0 auto 0.5rem;
+            position: relative;
+        }
+        
+        .grout-visual::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            background: var(--royal-blue);
+            transform: translateY(-50%);
+        }
+        
+        .grout-option:nth-child(1) .grout-visual::after { height: 1px; }
+        .grout-option:nth-child(2) .grout-visual::after { height: 2px; }
+        .grout-option:nth-child(3) .grout-visual::after { height: 3px; }
+        .grout-option:nth-child(4) .grout-visual::after { height: 4px; }
+        
+        .grout-option.selected .grout-visual {
+            background: var(--orange);
+        }
+        
+        .grout-option.selected .grout-visual::after {
+            background: var(--white);
+        }
+        
+        .preview-panel {
+            background: var(--royal-blue);
+            border: 4px solid var(--orange);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tile-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3px;
+            padding: 1.5rem;
+            background: var(--white);
+            border: 3px solid var(--yellow);
+        }
+        
+        .preview-tile {
+            width: 50px;
+            height: 50px;
+            background: var(--yellow);
+            border: 2px solid var(--royal-blue);
+        }
+        
+        .btn-primary {
+            background: var(--royal-blue);
+            color: var(--white);
+            border: 4px solid var(--royal-blue);
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 4px 4px 0px var(--orange);
+            transform: translate(-2px, -2px);
+        }
+        
+        .btn-secondary {
+            background: var(--white);
+            color: var(--royal-blue);
+            border: 4px solid var(--royal-blue);
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--orange);
+            color: var(--white);
+            box-shadow: 4px 4px 0px var(--royal-blue);
+            transform: translate(-2px, -2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-4" style="border-color: var(--royal-blue); background: var(--white);">
+        <div class="text-2xl font-bold" style="color: var(--royal-blue);">LAYITRIGHT</div>
+        <div class="flex gap-4">
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="help-circle" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-6xl">
+        <!-- Title -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4" style="color: var(--royal-blue);">
+                SELECT TILE & GROUT
+            </h1>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-12">
+            <div class="block-container p-6">
+                <h3 class="text-lg font-bold mb-6 uppercase" style="color: var(--royal-blue);">STEP 3: TILE & GROUT</h3>
+                <div class="flex items-center justify-center">
+                    <div class="progress-step">1</div>
+                    <div class="progress-line active"></div>
+                    <div class="progress-step">2</div>
+                    <div class="progress-line active"></div>
+                    <div class="progress-step active">3</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">4</div>
+                </div>
+                <div class="flex justify-between mt-4 text-sm font-bold uppercase">
+                    <span style="color: rgba(16, 55, 92, 0.5);">LAYOUT</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">DIMENSIONS</span>
+                    <span style="color: var(--royal-blue);">TILES</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">RESULTS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <!-- Left: Tile & Grout Selection -->
+            <div class="space-y-6">
+                <!-- Tile Size Section -->
+                <div class="tile-section">
+                    <h3 class="text-xl font-bold mb-4 uppercase" style="color: var(--royal-blue);">TILE SIZE</h3>
+                    
+                    <!-- Common Sizes -->
+                    <div class="tile-size-grid">
+                        <div class="tile-size-card selected">
+                            <div class="tile-visual">30×30</div>
+                            <div class="font-bold text-sm">300×300MM</div>
+                            <div class="text-xs mt-1">POPULAR</div>
+                        </div>
+                        <div class="tile-size-card">
+                            <div class="tile-visual">60×60</div>
+                            <div class="font-bold text-sm">600×600MM</div>
+                            <div class="text-xs mt-1">LARGE</div>
+                        </div>
+                        <div class="tile-size-card">
+                            <div class="tile-visual">30×60</div>
+                            <div class="font-bold text-sm">300×600MM</div>
+                            <div class="text-xs mt-1">SUBWAY</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Custom Size -->
+                    <h4 class="font-bold mb-3 uppercase" style="color: var(--royal-blue);">CUSTOM SIZE</h4>
+                    <div class="dimension-input">
+                        <label class="font-bold">LENGTH:</label>
+                        <input type="number" class="form-input" value="300">
+                        <span class="font-bold">MM</span>
+                    </div>
+                    <div class="dimension-input">
+                        <label class="font-bold">WIDTH:</label>
+                        <input type="number" class="form-input" value="300">
+                        <span class="font-bold">MM</span>
+                    </div>
+                </div>
+
+                <!-- Grout Width Section -->
+                <div class="tile-section">
+                    <h3 class="text-xl font-bold mb-4 uppercase" style="color: var(--royal-blue);">GROUT WIDTH</h3>
+                    
+                    <div class="grout-width-selector">
+                        <div class="grout-option">
+                            <div class="grout-visual"></div>
+                            <div class="font-bold text-xs">1MM</div>
+                            <div class="text-xs">MINIMAL</div>
+                        </div>
+                        <div class="grout-option selected">
+                            <div class="grout-visual"></div>
+                            <div class="font-bold text-xs">2MM</div>
+                            <div class="text-xs">STANDARD</div>
+                        </div>
+                        <div class="grout-option">
+                            <div class="grout-visual"></div>
+                            <div class="font-bold text-xs">3MM</div>
+                            <div class="text-xs">WIDE</div>
+                        </div>
+                        <div class="grout-option">
+                            <div class="grout-visual"></div>
+                            <div class="font-bold text-xs">4MM</div>
+                            <div class="text-xs">EXTRA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Preview -->
+            <div class="preview-panel">
+                <h3 class="text-2xl font-bold mb-6 uppercase text-center" style="color: var(--white);">TILE PREVIEW</h3>
+                
+                <div class="tile-preview-grid mb-4">
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                    <div class="preview-tile"></div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-lg font-bold" style="color: var(--white);">300×300MM TILES</div>
+                    <div class="text-lg font-bold" style="color: var(--yellow);">2MM GROUT LINES</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-between">
+            <button class="btn-secondary">← BACK</button>
+            <button class="btn-primary">CONTINUE →</button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        
+        // Tile size selection
+        document.querySelectorAll('.tile-size-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.tile-size-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        // Grout width selection
+        document.querySelectorAll('.grout-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.grout-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

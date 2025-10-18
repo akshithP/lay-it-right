@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Project Creation Theme 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif !important;
+        }
+        
+        :root {
+            --white: #F4F6FF;
+            --yellow: #F3C623;
+            --orange: #EB8317;
+            --royal-blue: #10375C;
+        }
+        
+        body {
+            background: var(--white);
+            color: var(--royal-blue);
+        }
+        
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active {
+            background: var(--royal-blue);
+            color: var(--white);
+        }
+        
+        .progress-step.inactive {
+            background: rgba(16, 55, 92, 0.1);
+            color: rgba(16, 55, 92, 0.5);
+        }
+        
+        .progress-line {
+            height: 2px;
+            background: rgba(16, 55, 92, 0.1);
+            flex: 1;
+            margin: 0 1rem;
+            position: relative;
+        }
+        
+        .progress-line.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: var(--royal-blue);
+            animation: fillProgress 0.5s ease-out;
+        }
+        
+        @keyframes fillProgress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        
+        .method-tab {
+            background: var(--white);
+            border: 2px solid rgba(16, 55, 92, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .method-tab:hover {
+            border-color: var(--yellow);
+            box-shadow: 0 4px 12px rgba(243, 198, 35, 0.15);
+        }
+        
+        .method-tab.active {
+            border-color: var(--royal-blue);
+            background: rgba(16, 55, 92, 0.02);
+        }
+        
+        .template-card {
+            background: var(--white);
+            border: 2px solid rgba(16, 55, 92, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .template-card:hover {
+            border-color: var(--orange);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(235, 131, 23, 0.15);
+        }
+        
+        .template-card.selected {
+            border-color: var(--royal-blue);
+            background: rgba(16, 55, 92, 0.05);
+        }
+        
+        .template-shape {
+            width: 60px;
+            height: 60px;
+            background: var(--yellow);
+            border: 2px solid var(--orange);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--royal-blue);
+        }
+        
+        .btn-primary {
+            background: var(--royal-blue);
+            color: var(--white);
+            border: 2px solid var(--royal-blue);
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: var(--orange);
+            border-color: var(--orange);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(235, 131, 23, 0.25);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--royal-blue);
+            border: 2px solid rgba(16, 55, 92, 0.2);
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--yellow);
+            background: var(--yellow);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-2" style="border-color: rgba(16, 55, 92, 0.1);">
+        <div class="text-2xl font-bold" style="color: var(--royal-blue);">LayItRight</div>
+        <div class="flex gap-4">
+            <button class="p-2 rounded-lg hover:bg-opacity-10 hover:bg-gray-500">
+                <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="p-2 rounded-lg hover:bg-opacity-10 hover:bg-gray-500">
+                <i data-lucide="help-circle" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-6xl">
+        <!-- Title -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4" style="color: var(--royal-blue);">
+                CREATE YOUR TILING PROJECT
+            </h1>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-12">
+            <div class="bg-white rounded-lg p-6 border-2" style="border-color: rgba(16, 55, 92, 0.1);">
+                <h3 class="text-lg font-semibold mb-4" style="color: var(--royal-blue);">Step 1: Layout Selection</h3>
+                <div class="flex items-center justify-center">
+                    <div class="progress-step active">1</div>
+                    <div class="progress-line active"></div>
+                    <div class="progress-step inactive">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step inactive">3</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step inactive">4</div>
+                </div>
+                <div class="flex justify-between mt-2 text-sm">
+                    <span style="color: var(--royal-blue);" class="font-medium">Layout</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">Dimensions</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">Tiles</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">Results</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Method Selection -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="method-tab active">
+                <div class="flex items-center justify-center mb-4">
+                    <i data-lucide="pencil" class="w-12 h-12" style="color: var(--orange);"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-center" style="color: var(--royal-blue);">DRAW CUSTOM</h3>
+                <p class="text-center" style="color: rgba(16, 55, 92, 0.7);">Create your exact layout</p>
+            </div>
+            
+            <div class="method-tab">
+                <div class="flex items-center justify-center mb-4">
+                    <i data-lucide="layout-template" class="w-12 h-12" style="color: var(--orange);"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-center" style="color: var(--royal-blue);">TEMPLATES</h3>
+                <p class="text-center" style="color: rgba(16, 55, 92, 0.7);">Choose from predefined shapes</p>
+            </div>
+        </div>
+
+        <!-- Canvas/Templates Area -->
+        <div class="mb-8">
+            <div class="bg-white rounded-lg p-8 border-2" style="border-color: rgba(16, 55, 92, 0.1);">
+                <h3 class="text-xl font-semibold mb-6" style="color: var(--royal-blue);">CANVAS AREA</h3>
+                
+                <!-- Template Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="template-card selected">
+                        <div class="template-shape">▢</div>
+                        <span class="font-medium" style="color: var(--royal-blue);">Rectangle</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">⌐</div>
+                        <span class="font-medium" style="color: var(--royal-blue);">L-Shape</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">⊔</div>
+                        <span class="font-medium" style="color: var(--royal-blue);">U-Shape</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">┬</div>
+                        <span class="font-medium" style="color: var(--royal-blue);">T-Shape</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">≡</div>
+                        <span class="font-medium" style="color: var(--royal-blue);">Custom</span>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-shape">+</div>
+                        <span class="font-medium" style="color: var(--royal-blue);">More</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-4">
+            <button class="btn-secondary">CANCEL</button>
+            <button class="btn-primary">CONTINUE</button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        
+        // Tab switching functionality
+        document.querySelectorAll('.method-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

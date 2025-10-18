@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Theme 1 (Exact Match)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="theme_1_exact_match.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header flex justify-between items-center">
+        <h1 class="text-xl font-bold text-white">LAY-IT-RIGHT</h1>
+        <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center cursor-pointer">
+            <i data-lucide="help-circle" class="w-5 h-5 text-white"></i>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">CREATE YOUR TILING PROJECT</h2>
+        </div>
+
+        <!-- Step Progress -->
+        <div class="step-card mb-6">
+            <div class="mb-4">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">STEP 1: LAYOUT SELECTION</h3>
+                <div class="flex items-center justify-between max-w-md">
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center font-bold text-sm">1</div>
+                        <span class="text-xs mt-1 font-medium">LAYOUT</span>
+                    </div>
+                    <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-bold text-sm">2</div>
+                        <span class="text-xs mt-1 font-medium">DIMENSIONS</span>
+                    </div>
+                    <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-bold text-sm">3</div>
+                        <span class="text-xs mt-1 font-medium">TILES</span>
+                    </div>
+                    <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-bold text-sm">4</div>
+                        <span class="text-xs mt-1 font-medium">RESULTS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Draw Custom vs Templates -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="template-card cursor-pointer hover:shadow-lg transition-all">
+                <div class="flex items-center mb-2">
+                    <i data-lucide="edit" class="w-6 h-6 text-orange-500 mr-3"></i>
+                    <h3 class="text-lg font-bold">DRAW CUSTOM</h3>
+                </div>
+                <p class="text-sm text-gray-600">CREATE EXACT LAYOUT</p>
+            </div>
+            <div class="template-card selected cursor-pointer">
+                <div class="flex items-center mb-2">
+                    <i data-lucide="layout-template" class="w-6 h-6 text-orange-500 mr-3"></i>
+                    <h3 class="text-lg font-bold">TEMPLATES</h3>
+                </div>
+                <p class="text-sm">PREDEFINED AREAS</p>
+            </div>
+        </div>
+
+        <!-- Template Gallery -->
+        <div class="step-card">
+            <h3 class="text-xl font-bold text-gray-800 mb-6">TEMPLATE GALLERY</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Square Template -->
+                <div class="template-card selected cursor-pointer text-center">
+                    <div class="mb-4 flex justify-center">
+                        <div class="w-24 h-24 border-4 border-white relative flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">a</span>
+                            <div class="absolute bottom-1 left-1">
+                                <span class="text-white text-sm font-bold">a</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-lg">SQUARE</h4>
+                </div>
+
+                <!-- Rectangle Template -->
+                <div class="template-card cursor-pointer text-center hover:shadow-lg">
+                    <div class="mb-4 flex justify-center">
+                        <div class="w-32 h-20 border-4 border-gray-800 relative flex items-center justify-center bg-white">
+                            <span class="text-gray-800 font-bold text-lg">a</span>
+                            <div class="absolute bottom-1 left-1">
+                                <span class="text-gray-800 text-sm font-bold">b</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-lg text-gray-800">RECTANGLE</h4>
+                </div>
+
+                <!-- L-Shape Template -->
+                <div class="template-card cursor-pointer text-center hover:shadow-lg">
+                    <div class="mb-4 flex justify-center">
+                        <div class="relative">
+                            <!-- Main L-shape -->
+                            <div class="w-32 h-12 border-4 border-gray-800 bg-white relative">
+                                <span class="absolute top-1 left-1 text-gray-800 text-sm font-bold">b</span>
+                                <span class="absolute top-1 right-1 text-gray-800 text-sm font-bold">f</span>
+                            </div>
+                            <div class="w-16 h-16 border-4 border-gray-800 bg-white relative mt-0">
+                                <span class="absolute top-1 left-1 text-gray-800 text-sm font-bold">e</span>
+                                <span class="absolute bottom-1 right-1 text-gray-800 text-sm font-bold">d</span>
+                            </div>
+                            <span class="absolute top-0 left-2 text-gray-800 text-lg font-bold">a</span>
+                            <span class="absolute bottom-2 left-8 text-gray-800 text-lg font-bold">c</span>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-lg text-gray-800">L-SHAPE</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-4 mt-8">
+            <button class="btn-secondary px-8 py-3 rounded-lg font-bold">CANCEL</button>
+            <button class="btn-primary px-8 py-3 rounded-lg font-bold">CONTINUE</button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Add click handlers for templates
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selected class from all cards in the same section
+                const section = this.closest('.grid');
+                section.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+                // Add selected class to clicked card
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

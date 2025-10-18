@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Draw Your Layout V1 Enhanced Alt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="canvas_drawing_theme.css">
+    <style>
+        .dimension-input {
+            background: var(--yellow) !important;
+            border: 3px solid var(--royal-blue) !important;
+            color: var(--royal-blue) !important;
+            font-weight: 700 !important;
+            font-size: 11px !important;
+            padding: 4px 6px !important;
+            width: 70px !important;
+            text-align: center !important;
+            box-shadow: 2px 2px 0px var(--orange) !important;
+        }
+
+        .dimension-input:focus {
+            background: var(--white) !important;
+            box-shadow: 3px 3px 0px var(--orange) !important;
+            transform: translate(-1px, -1px) !important;
+        }
+
+        .shape-stats-box {
+            background: var(--yellow) !important;
+            border: 4px solid var(--royal-blue) !important;
+            box-shadow: 6px 6px 0px var(--orange) !important;
+        }
+
+        .stats-item {
+            background: var(--white) !important;
+            border: 2px solid var(--royal-blue) !important;
+            padding: 4px 8px !important;
+            margin: 2px 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-4" style="border-color: var(--royal-blue); background: var(--white);">
+        <div class="text-2xl font-bold" style="color: var(--royal-blue);">LAYITRIGHT</div>
+        <div class="flex gap-4">
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+            <button class="p-2 bg-white border-3 border-royal-blue hover:bg-orange" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                <i data-lucide="help-circle" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-6xl">
+        <!-- Title -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4" style="color: var(--royal-blue);">
+                CREATE YOUR TILING PROJECT
+            </h1>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-12">
+            <div class="block-container p-6">
+                <h3 class="text-lg font-bold mb-6 uppercase" style="color: var(--royal-blue);">STEP 1: DRAW YOUR LAYOUT</h3>
+                <div class="flex items-center justify-center">
+                    <div class="progress-step active">1</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">3</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">4</div>
+                </div>
+                <div class="flex justify-between mt-4 text-sm font-bold uppercase">
+                    <span style="color: var(--royal-blue);">LAYOUT</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">DIMENSIONS</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">TILES</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">RESULTS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas Tools Header -->
+        <div class="mb-4">
+            <div class="tools-header flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <span class="font-bold uppercase text-sm" style="color: var(--royal-blue);">CANVAS TOOLS</span>
+                </div>
+                <div class="flex gap-3">
+                    <button class="tool-button" title="Undo Last Step">
+                        <i data-lucide="undo-2" class="w-5 h-5"></i>
+                    </button>
+                    <button class="tool-button" title="Redo">
+                        <i data-lucide="redo-2" class="w-5 h-5"></i>
+                    </button>
+                    <button class="tool-button" title="Clear Canvas">
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
+                    <button class="tool-button active" title="Drawing Mode">
+                        <i data-lucide="pencil" class="w-5 h-5"></i>
+                    </button>
+                    <button class="tool-button" title="Help">
+                        <i data-lucide="help-circle" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas Area with Bottom Stats -->
+        <div class="mb-8">
+            <div class="canvas-container" style="height: 500px; position: relative;">
+                <!-- Grid Background -->
+                <div class="canvas-grid w-full h-full absolute inset-0"></div>
+
+                <!-- Shape Status Box - Bottom Left -->
+                <div class="absolute bottom-4 left-4 shape-stats-box p-4" style="z-index: 10; min-width: 240px;">
+                    <h4 class="font-bold text-sm uppercase mb-3" style="color: var(--royal-blue);">📐 MEASUREMENTS</h4>
+                    <div class="space-y-1">
+                        <div class="stats-item flex justify-between text-xs">
+                            <span style="color: var(--royal-blue);">POINTS:</span>
+                            <strong style="color: var(--royal-blue);">4</strong>
+                        </div>
+                        <div class="stats-item flex justify-between text-xs">
+                            <span style="color: var(--royal-blue);">AREA:</span>
+                            <strong style="color: var(--royal-blue);">16.0 m²</strong>
+                        </div>
+                        <div class="stats-item flex justify-between text-xs">
+                            <span style="color: var(--royal-blue);">PERIMETER:</span>
+                            <strong style="color: var(--royal-blue);">16.0 m</strong>
+                        </div>
+                        <div class="stats-item text-center text-xs font-bold" style="color: var(--royal-blue);">
+                            ✅ READY TO CONTINUE
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side Length Labels - Top Right -->
+                <div class="absolute top-4 right-4 shape-stats-box p-3" style="z-index: 10; min-width: 160px;">
+                    <h4 class="font-bold text-xs uppercase mb-2" style="color: var(--royal-blue);">SIDE LENGTHS</h4>
+                    <div class="space-y-1 text-xs">
+                        <div class="flex justify-between">
+                            <span style="color: var(--royal-blue);">A→B:</span>
+                            <strong style="color: var(--royal-blue);">4.2 m</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span style="color: var(--royal-blue);">B→C:</span>
+                            <strong style="color: var(--royal-blue);">3.8 m</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span style="color: var(--royal-blue);">C→D:</span>
+                            <strong style="color: var(--royal-blue);">4.2 m</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span style="color: var(--royal-blue);">D→A:</span>
+                            <strong style="color: var(--royal-blue);">3.8 m</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SVG Canvas for Drawing -->
+                <svg class="w-full h-full absolute inset-0" style="z-index: 5;">
+                    <!-- Example Rectangle Shape -->
+                    <rect x="200" y="150" width="300" height="180" class="rectangle-example"></rect>
+
+                    <!-- Corner Nodes with Enhanced Labels -->
+                    <g>
+                        <!-- Node A -->
+                        <circle cx="200" cy="150" r="10" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="4"></circle>
+                        <circle cx="200" cy="150" r="4" fill="var(--yellow)"></circle>
+                        <text x="175" y="140" fill="var(--royal-blue)" font-size="14" font-weight="bold">A</text>
+
+                        <!-- Node B -->
+                        <circle cx="500" cy="150" r="10" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="4"></circle>
+                        <circle cx="500" cy="150" r="4" fill="var(--yellow)"></circle>
+                        <text x="510" y="140" fill="var(--royal-blue)" font-size="14" font-weight="bold">B</text>
+
+                        <!-- Node C -->
+                        <circle cx="500" cy="330" r="10" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="4"></circle>
+                        <circle cx="500" cy="330" r="4" fill="var(--yellow)"></circle>
+                        <text x="510" y="350" fill="var(--royal-blue)" font-size="14" font-weight="bold">C</text>
+
+                        <!-- Node D -->
+                        <circle cx="200" cy="330" r="10" fill="var(--royal-blue)" stroke="var(--orange)" stroke-width="4"></circle>
+                        <circle cx="200" cy="330" r="4" fill="var(--yellow)"></circle>
+                        <text x="175" y="350" fill="var(--royal-blue)" font-size="14" font-weight="bold">D</text>
+                    </g>
+
+                    <!-- Enhanced Dimension Input Boxes -->
+                    <g>
+                        <!-- Top side dimension (A→B) -->
+                        <foreignObject x="320" y="120" width="80" height="25">
+                            <input type="number" class="dimension-input" value="4.2" step="0.1" min="0" placeholder="Length" />
+                        </foreignObject>
+                        <text x="360" y="115" fill="var(--royal-blue)" font-size="10" font-weight="bold" text-anchor="middle">A→B</text>
+
+                        <!-- Right side dimension (B→C) -->
+                        <foreignObject x="520" y="230" width="80" height="25">
+                            <input type="number" class="dimension-input" value="3.8" step="0.1" min="0" placeholder="Width" />
+                        </foreignObject>
+                        <text x="535" y="225" fill="var(--royal-blue)" font-size="10" font-weight="bold">B→C</text>
+
+                        <!-- Bottom side dimension (C→D) -->
+                        <foreignObject x="320" y="355" width="80" height="25">
+                            <input type="number" class="dimension-input" value="4.2" step="0.1" min="0" placeholder="Length" />
+                        </foreignObject>
+                        <text x="360" y="350" fill="var(--royal-blue)" font-size="10" font-weight="bold" text-anchor="middle">C→D</text>
+
+                        <!-- Left side dimension (D→A) -->
+                        <foreignObject x="100" y="230" width="80" height="25">
+                            <input type="number" class="dimension-input" value="3.8" step="0.1" min="0" placeholder="Width" />
+                        </foreignObject>
+                        <text x="115" y="225" fill="var(--royal-blue)" font-size="10" font-weight="bold">D→A</text>
+                    </g>
+                </svg>
+
+                <!-- Instructions Overlay -->
+                <div class="absolute top-4 left-4" style="z-index: 6; max-width: 300px;">
+                    <div class="bg-white border-3 border-royal-blue p-3" style="background: var(--white); border: 3px solid var(--royal-blue);">
+                        <p class="font-bold text-xs uppercase" style="color: var(--royal-blue);">
+                            💡 CLICK: Add points • DRAG: Move nodes • TYPE: Enter dimensions
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unit Selection -->
+        <div class="mb-8">
+            <div class="block-container p-6">
+                <h3 class="text-lg font-bold mb-4 uppercase" style="color: var(--royal-blue);">MEASUREMENT UNITS</h3>
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <button class="unit-selector">INCH</button>
+                    <button class="unit-selector">FEET</button>
+                    <button class="unit-selector active">MM</button>
+                    <button class="unit-selector">CM</button>
+                    <button class="unit-selector">M</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-between gap-6">
+            <button class="btn-secondary">← BACK</button>
+            <button class="btn-primary">CONTINUE →</button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // Tool button interactions
+        document.querySelectorAll('.tool-button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (!this.classList.contains('active')) {
+                    document.querySelectorAll('.tool-button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Unit selector
+        document.querySelectorAll('.unit-selector').forEach(unit => {
+            unit.addEventListener('click', function() {
+                document.querySelectorAll('.unit-selector').forEach(u => u.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Enhanced dimension input handlers with real-time updates
+        document.querySelectorAll('.dimension-input').forEach((input, index) => {
+            input.addEventListener('input', function() {
+                updateShapeStats();
+                updateSideLengths();
+            });
+
+            input.addEventListener('focus', function() {
+                this.style.background = 'var(--white)';
+                this.style.boxShadow = '4px 4px 0px var(--orange)';
+                this.style.transform = 'translate(-2px, -2px)';
+            });
+
+            input.addEventListener('blur', function() {
+                this.style.background = 'var(--yellow)';
+                this.style.boxShadow = '2px 2px 0px var(--orange)';
+                this.style.transform = 'none';
+            });
+        });
+
+        // Update side lengths display
+        function updateSideLengths() {
+            const inputs = document.querySelectorAll('.dimension-input');
+            const lengths = Array.from(inputs).map(input => parseFloat(input.value) || 0);
+
+            const sideLengthsBox = document.querySelector('.absolute.top-4.right-4');
+            sideLengthsBox.innerHTML = `
+                <h4 class="font-bold text-xs uppercase mb-2" style="color: var(--royal-blue);">SIDE LENGTHS</h4>
+                <div class="space-y-1 text-xs">
+                    <div class="flex justify-between">
+                        <span style="color: var(--royal-blue);">A→B:</span>
+                        <strong style="color: var(--royal-blue);">${lengths[0]?.toFixed(1) || '0.0'} m</strong>
+                    </div>
+                    <div class="flex justify-between">
+                        <span style="color: var(--royal-blue);">B→C:</span>
+                        <strong style="color: var(--royal-blue);">${lengths[1]?.toFixed(1) || '0.0'} m</strong>
+                    </div>
+                    <div class="flex justify-between">
+                        <span style="color: var(--royal-blue);">C→D:</span>
+                        <strong style="color: var(--royal-blue);">${lengths[2]?.toFixed(1) || '0.0'} m</strong>
+                    </div>
+                    <div class="flex justify-between">
+                        <span style="color: var(--royal-blue);">D→A:</span>
+                        <strong style="color: var(--royal-blue);">${lengths[3]?.toFixed(1) || '0.0'} m</strong>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Update shape statistics
+        function updateShapeStats() {
+            const inputs = document.querySelectorAll('.dimension-input');
+            const dimensions = Array.from(inputs).map(input => parseFloat(input.value) || 0);
+
+            // Calculate area and perimeter (assuming rectangle for demo)
+            const area = dimensions[0] * dimensions[1];
+            const perimeter = 2 * (dimensions[0] + dimensions[1]);
+
+            // Update stats display
+            const statsBox = document.querySelector('.absolute.bottom-4.left-4');
+            statsBox.innerHTML = `
+                <h4 class="font-bold text-sm uppercase mb-3" style="color: var(--royal-blue);">📐 MEASUREMENTS</h4>
+                <div class="space-y-1">
+                    <div class="stats-item flex justify-between text-xs">
+                        <span style="color: var(--royal-blue);">POINTS:</span>
+                        <strong style="color: var(--royal-blue);">4</strong>
+                    </div>
+                    <div class="stats-item flex justify-between text-xs">
+                        <span style="color: var(--royal-blue);">AREA:</span>
+                        <strong style="color: var(--royal-blue);">${area.toFixed(1)} m²</strong>
+                    </div>
+                    <div class="stats-item flex justify-between text-xs">
+                        <span style="color: var(--royal-blue);">PERIMETER:</span>
+                        <strong style="color: var(--royal-blue);">${perimeter.toFixed(1)} m</strong>
+                    </div>
+                    <div class="stats-item text-center text-xs font-bold" style="color: var(--royal-blue);">
+                        ${area > 0 ? '✅ READY TO CONTINUE' : '⚠️ ENTER DIMENSIONS'}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Canvas interaction simulation with enhanced feedback
+        let nodeCount = 5; // Start after ABCD
+        document.querySelector('svg').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Skip if clicking on input or existing elements
+            if (e.target.tagName === 'input' || e.target.tagName === 'circle') return;
+
+            // Add new enhanced node
+            const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+            const outerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            outerCircle.setAttribute('cx', x);
+            outerCircle.setAttribute('cy', y);
+            outerCircle.setAttribute('r', '10');
+            outerCircle.setAttribute('fill', 'var(--royal-blue)');
+            outerCircle.setAttribute('stroke', 'var(--orange)');
+            outerCircle.setAttribute('stroke-width', '4');
+
+            const innerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            innerCircle.setAttribute('cx', x);
+            innerCircle.setAttribute('cy', y);
+            innerCircle.setAttribute('r', '4');
+            innerCircle.setAttribute('fill', 'var(--yellow)');
+
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', x - 20);
+            text.setAttribute('y', y - 15);
+            text.setAttribute('fill', 'var(--royal-blue)');
+            text.setAttribute('font-size', '14');
+            text.setAttribute('font-weight', 'bold');
+            text.textContent = String.fromCharCode(64 + nodeCount);
+
+            group.appendChild(outerCircle);
+            group.appendChild(innerCircle);
+            group.appendChild(text);
+            this.appendChild(group);
+
+            nodeCount++;
+            updateShapeStats();
+        });
+
+        // Initialize displays
+        updateShapeStats();
+        updateSideLengths();
+    </script>
+</body>
+</html>

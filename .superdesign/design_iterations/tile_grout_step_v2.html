@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayItRight - Tile & Grout Step V2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+
+        :root {
+            --white: #F4F6FF;
+            --yellow: #F3C623;
+            --orange: #EB8317;
+            --royal-blue: #10375C;
+        }
+
+        body {
+            background: var(--yellow) !important;
+            color: var(--royal-blue) !important;
+        }
+
+        .block-container {
+            background: var(--white) !important;
+            border: 4px solid var(--royal-blue) !important;
+            border-radius: 0 !important;
+            box-shadow: 8px 8px 0px var(--royal-blue) !important;
+        }
+
+        .progress-step {
+            width: 50px !important;
+            height: 50px !important;
+            border: 4px solid var(--royal-blue) !important;
+            background: var(--white) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-weight: 700 !important;
+            font-size: 1.2rem !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .progress-step.active {
+            background: var(--royal-blue) !important;
+            color: var(--white) !important;
+            box-shadow: 4px 4px 0px var(--orange) !important;
+        }
+
+        .progress-line {
+            height: 6px !important;
+            background: var(--white) !important;
+            border: 3px solid var(--royal-blue) !important;
+            flex: 1 !important;
+            margin: 0 1rem !important;
+        }
+
+        .progress-line.active {
+            background: var(--royal-blue) !important;
+        }
+
+        .preset-button {
+            background: var(--white) !important;
+            border: 3px solid var(--royal-blue) !important;
+            padding: 1rem !important;
+            text-align: center !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+        }
+
+        .preset-button:hover {
+            background: var(--orange) !important;
+            color: var(--white) !important;
+            box-shadow: 3px 3px 0px var(--royal-blue) !important;
+            transform: translate(-1px, -1px) !important;
+        }
+
+        .preset-button.active {
+            background: var(--royal-blue) !important;
+            color: var(--white) !important;
+            box-shadow: 3px 3px 0px var(--orange) !important;
+        }
+
+        .dimension-input {
+            background: var(--white) !important;
+            border: 4px solid var(--royal-blue) !important;
+            color: var(--royal-blue) !important;
+            font-weight: 700 !important;
+            font-size: 1.5rem !important;
+            padding: 1rem !important;
+            text-align: center !important;
+        }
+
+        .dimension-input:focus {
+            outline: none !important;
+            box-shadow: 6px 6px 0px var(--orange) !important;
+            transform: translate(-2px, -2px) !important;
+        }
+
+        .tile-preview {
+            background: var(--white) !important;
+            border: 4px solid var(--royal-blue) !important;
+            padding: 2rem !important;
+            min-height: 300px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-direction: column !important;
+        }
+
+        .grout-preview {
+            background: var(--white) !important;
+            border: 4px solid var(--royal-blue) !important;
+            padding: 2rem !important;
+            min-height: 300px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-direction: column !important;
+        }
+
+        .btn-primary {
+            background: var(--royal-blue) !important;
+            color: var(--white) !important;
+            border: 4px solid var(--royal-blue) !important;
+            padding: 1rem 2.5rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            transition: all 0.2s ease !important;
+            letter-spacing: 1px !important;
+            cursor: pointer !important;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 4px 4px 0px var(--orange) !important;
+            transform: translate(-2px, -2px) !important;
+        }
+
+        .btn-secondary {
+            background: var(--white) !important;
+            color: var(--royal-blue) !important;
+            border: 4px solid var(--royal-blue) !important;
+            padding: 1rem 2.5rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            transition: all 0.2s ease !important;
+            letter-spacing: 1px !important;
+            cursor: pointer !important;
+        }
+
+        .btn-secondary:hover {
+            background: var(--orange) !important;
+            color: var(--white) !important;
+            box-shadow: 4px 4px 0px var(--royal-blue) !important;
+            transform: translate(-2px, -2px) !important;
+        }
+
+        .section-title {
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            margin-bottom: 1rem !important;
+        }
+
+        .info-text {
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 1rem !important;
+        }
+
+        .unit-selector {
+            background: var(--white) !important;
+            border: 3px solid var(--royal-blue) !important;
+            padding: 0.5rem 1rem !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+        }
+
+        .tile-size-display {
+            font-size: 2rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            margin: 1rem 0 !important;
+        }
+
+        .tile-label {
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            opacity: 0.8 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center border-b-4" style="border-color: var(--royal-blue); background: var(--white);">
+        <div class="text-2xl font-bold" style="color: var(--royal-blue);">LAYITRIGHT</div>
+        <div class="flex gap-4">
+            <button class="p-2" style="background: var(--white); border: 3px solid var(--royal-blue); cursor: pointer;">
+                <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--royal-blue);"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-6xl">
+        <!-- Title -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4" style="color: var(--royal-blue); text-shadow: 3px 3px 0px var(--orange);">
+                TILE & GROUT
+            </h1>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-12">
+            <div class="block-container p-6">
+                <h3 class="text-lg font-bold mb-6 uppercase" style="color: var(--royal-blue);">STEP 2 OF 4: TILE & GROUT</h3>
+                <div class="flex items-center justify-center">
+                    <div class="progress-step">1</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step active">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">3</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">4</div>
+                </div>
+                <div class="flex justify-between mt-4 text-sm font-bold uppercase">
+                    <span style="color: rgba(16, 55, 92, 0.5);">DIMENSIONS</span>
+                    <span style="color: var(--royal-blue);">TILES</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">PATTERN</span>
+                    <span style="color: rgba(16, 55, 92, 0.5);">RESULTS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tile Dimensions Section -->
+        <div class="mb-8">
+            <div class="block-container p-8">
+                <h2 class="section-title">1. TILE DIMENSIONS</h2>
+                <p class="info-text">Select common tile size or enter custom dimensions (max 2m per side)</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Left: Preset Selection -->
+                    <div>
+                        <h3 class="text-base font-bold uppercase mb-4" style="color: var(--royal-blue);">QUICK PRESETS</h3>
+                        <div class="grid grid-cols-2 gap-4 mb-8">
+                            <!-- Preset 1: 30x30 -->
+                            <button class="preset-button active" onclick="selectPreset(this, 30, 30, 'cm', 'COMMON')">
+                                <div style="font-size: 2rem; margin: 0.5rem 0; color: var(--orange);">████</div>
+                                <div style="font-size: 0.9rem;">30×30 CM</div>
+                                <div style="font-size: 0.75rem; opacity: 0.7;">COMMON</div>
+                            </button>
+
+                            <!-- Preset 2: 60x60 -->
+                            <button class="preset-button" onclick="selectPreset(this, 60, 60, 'cm', 'LARGE')">
+                                <div style="font-size: 2rem; margin: 0.5rem 0; color: var(--orange);">████</div>
+                                <div style="font-size: 0.9rem;">60×60 CM</div>
+                                <div style="font-size: 0.75rem; opacity: 0.7;">LARGE</div>
+                            </button>
+
+                            <!-- Preset 3: 20x20 -->
+                            <button class="preset-button" onclick="selectPreset(this, 20, 20, 'cm', 'SMALL')">
+                                <div style="font-size: 2rem; margin: 0.5rem 0; color: var(--orange);">████</div>
+                                <div style="font-size: 0.9rem;">20×20 CM</div>
+                                <div style="font-size: 0.75rem; opacity: 0.7;">SMALL</div>
+                            </button>
+
+                            <!-- Preset 4: 15x15 -->
+                            <button class="preset-button" onclick="selectPreset(this, 15, 15, 'cm', 'MOSAIC')">
+                                <div style="font-size: 2rem; margin: 0.5rem 0; color: var(--orange);">████</div>
+                                <div style="font-size: 0.9rem;">15×15 CM</div>
+                                <div style="font-size: 0.75rem; opacity: 0.7;">MOSAIC</div>
+                            </button>
+                        </div>
+
+                        <div style="border-top: 2px dashed var(--royal-blue); padding-top: 1rem; margin-bottom: 1rem;">
+                            <h3 class="text-base font-bold uppercase mb-4" style="color: var(--royal-blue);">OR ENTER CUSTOM</h3>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-bold uppercase mb-2" style="color: var(--royal-blue);">LENGTH</label>
+                                    <input type="number" id="tileLength" class="dimension-input w-full" value="30" placeholder="0" step="0.1" min="0.1" max="200" onchange="updatePreview()">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold uppercase mb-2" style="color: var(--royal-blue);">WIDTH</label>
+                                    <input type="number" id="tileWidth" class="dimension-input w-full" value="30" placeholder="0" step="0.1" min="0.1" max="200" onchange="updatePreview()">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold uppercase mb-2" style="color: var(--royal-blue);">UNIT</label>
+                                <select id="tileUnit" class="unit-selector w-full" onchange="updatePreview()">
+                                    <option value="mm">MM (Millimeters)</option>
+                                    <option value="cm" selected>CM (Centimeters)</option>
+                                    <option value="m">M (Meters)</option>
+                                    <option value="in">IN (Inches)</option>
+                                    <option value="ft">FT (Feet)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Tile Preview -->
+                    <div class="tile-preview">
+                        <div class="tile-label">YOUR SELECTED TILE</div>
+                        <div class="tile-size-display" id="tileDisplay">30×30 CM</div>
+                        <svg viewBox="0 0 200 200" width="150" height="150" style="margin: 1rem 0;">
+                            <!-- Tile preview -->
+                            <rect x="20" y="20" width="160" height="160" stroke="#10375C" stroke-width="3" fill="rgba(243, 198, 35, 0.2)"/>
+                            <!-- Dimension lines -->
+                            <line x1="10" y1="100" x2="20" y2="100" stroke="#10375C" stroke-width="2"/>
+                            <line x1="190" y1="100" x2="200" y2="100" stroke="#10375C" stroke-width="2"/>
+                            <text x="100" y="115" text-anchor="middle" font-size="12" font-weight="bold" fill="#10375C">TILE</text>
+                        </svg>
+                        <div class="info-text" id="tileArea">Area per tile: 900 cm²</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grout Width Section -->
+        <div class="mb-8">
+            <div class="block-container p-8">
+                <h2 class="section-title">2. GROUT WIDTH</h2>
+                <p class="info-text">Space between tiles (max 20mm)</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Left: Grout Input -->
+                    <div>
+                        <h3 class="text-base font-bold uppercase mb-4" style="color: var(--royal-blue);">GROUT SETTINGS</h3>
+
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold uppercase mb-3" style="color: var(--royal-blue);">GROUT WIDTH</label>
+                            <div class="flex gap-4">
+                                <input type="number" id="groutWidth" class="dimension-input flex-1" value="3" placeholder="0" step="0.5" min="0" max="20" onchange="updatePreview()">
+                                <select id="groutUnit" class="unit-selector" onchange="updatePreview()">
+                                    <option value="mm" selected>MM</option>
+                                    <option value="cm">CM</option>
+                                </select>
+                            </div>
+                            <div class="info-text mt-2">Max: 20mm</div>
+                        </div>
+
+                        <div style="background: var(--yellow); border: 3px solid var(--royal-blue); padding: 1rem; margin-top: 1rem;">
+                            <h4 class="font-bold uppercase mb-2" style="color: var(--royal-blue);">COMMON GROUT WIDTHS</h4>
+                            <ul class="text-sm font-bold" style="color: var(--royal-blue);">
+                                <li>• 2-3mm: Ceramic wall tiles</li>
+                                <li>• 3-5mm: Standard floor tiles</li>
+                                <li>• 5-8mm: Large format tiles</li>
+                                <li>• 10-20mm: Decorative/rustic style</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right: Grout Preview -->
+                    <div class="grout-preview">
+                        <div class="tile-label">GROUT VISUALIZATION</div>
+                        <svg viewBox="0 0 200 200" width="150" height="150" style="margin: 1rem 0;">
+                            <!-- Grid with grout lines -->
+                            <rect x="20" y="20" width="50" height="50" stroke="#10375C" stroke-width="2" fill="rgba(243, 198, 35, 0.3)"/>
+                            <rect x="75" y="20" width="50" height="50" stroke="#10375C" stroke-width="2" fill="rgba(243, 198, 35, 0.3)"/>
+                            <rect x="130" y="20" width="50" height="50" stroke="#10375C" stroke-width="2" fill="rgba(243, 198, 35, 0.3)"/>
+                            <rect x="20" y="75" width="50" height="50" stroke="#10375C" stroke-width="2" fill="rgba(243, 198, 35, 0.3)"/>
+                            <rect x="75" y="75" width="50" height="50" stroke="#10375C" stroke-width="2" fill="rgba(243, 198, 35, 0.3)"/>
+                            <rect x="130" y="75" width="50" height="50" stroke="#10375C" stroke-width="2" fill="rgba(243, 198, 35, 0.3)"/>
+
+                            <!-- Grout lines highlighting -->
+                            <line x1="70" y1="20" x2="70" y2="125" stroke="#EB8317" stroke-width="3" opacity="0.7"/>
+                            <line x1="20" y1="70" x2="180" y2="70" stroke="#EB8317" stroke-width="3" opacity="0.7"/>
+
+                            <!-- Grout label -->
+                            <text x="85" y="140" text-anchor="middle" font-size="11" font-weight="bold" fill="#EB8317">← GROUT</text>
+                        </svg>
+                        <div class="info-text" id="groutImpact">Grout impact: -2.4% usable area</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="mb-8">
+            <div class="block-container p-8" style="background: var(--yellow);">
+                <h2 class="section-title">SUMMARY</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <div class="text-sm font-bold uppercase" style="color: var(--royal-blue); opacity: 0.7;">ROOM SIZE</div>
+                        <div class="text-xl font-bold" style="color: var(--royal-blue);">5m × 4m</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-sm font-bold uppercase" style="color: var(--royal-blue); opacity: 0.7;">TILE SIZE</div>
+                        <div class="text-xl font-bold" style="color: var(--royal-blue);" id="summaryTile">30×30cm</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-sm font-bold uppercase" style="color: var(--royal-blue); opacity: 0.7;">GROUT</div>
+                        <div class="text-xl font-bold" style="color: var(--royal-blue);" id="summaryGrout">3 mm</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-sm font-bold uppercase" style="color: var(--royal-blue); opacity: 0.7;">EST. TILES</div>
+                        <div class="text-xl font-bold" style="color: var(--royal-blue);" id="summaryTiles">~208</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-between gap-6">
+            <button class="btn-secondary">← BACK</button>
+            <button class="btn-primary">CONTINUE →</button>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        function selectPreset(button, length, width, unit, label) {
+            // Remove active class from all preset buttons
+            document.querySelectorAll('.preset-button').forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+
+            // Update inputs
+            document.getElementById('tileLength').value = length;
+            document.getElementById('tileWidth').value = width;
+            document.getElementById('tileUnit').value = unit;
+
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const length = parseFloat(document.getElementById('tileLength').value) || 0;
+            const width = parseFloat(document.getElementById('tileWidth').value) || 0;
+            const unit = document.getElementById('tileUnit').value;
+            const groutWidth = parseFloat(document.getElementById('groutWidth').value) || 0;
+            const groutUnit = document.getElementById('groutUnit').value;
+
+            // Update tile display
+            document.getElementById('tileDisplay').textContent = `${length}×${width} ${unit.toUpperCase()}`;
+
+            // Calculate area
+            const area = length * width;
+            let areaText = `${area.toFixed(0)} ${unit}²`;
+            if (area > 1000 && unit === 'cm') {
+                areaText = `${(area / 10000).toFixed(2)} m²`;
+            }
+            document.getElementById('tileArea').textContent = `Area per tile: ${areaText}`;
+
+            // Update grout display
+            document.getElementById('summaryGrout').textContent = `${groutWidth} ${groutUnit}`;
+
+            // Calculate estimated tiles (5m × 4m room)
+            const roomArea = 5000 * 4000; // in mm²
+            const tileLength = convertToMM(length, unit);
+            const tileWidth = convertToMM(width, unit);
+            const tileArea = tileLength * tileWidth;
+            const estimatedTiles = Math.ceil((roomArea / tileArea) * 1.05); // 5% waste
+
+            document.getElementById('summaryTiles').textContent = `~${estimatedTiles}`;
+            document.getElementById('summaryTile').textContent = `${length}×${width}${unit}`;
+
+            // Calculate grout impact
+            const groutWidthMM = convertToMM(groutWidth, groutUnit);
+            const totalSpacing = tileLength + groutWidthMM;
+            const groutImpact = ((groutWidthMM / totalSpacing) * 100).toFixed(1);
+            document.getElementById('groutImpact').textContent = `Grout impact: -${groutImpact}% usable area`;
+        }
+
+        function convertToMM(value, unit) {
+            switch(unit) {
+                case 'mm': return value;
+                case 'cm': return value * 10;
+                case 'm': return value * 1000;
+                case 'in': return value * 25.4;
+                case 'ft': return value * 304.8;
+                default: return value;
+            }
+        }
+
+        // Initialize
+        updatePreview();
+    </script>
+</body>
+</html>

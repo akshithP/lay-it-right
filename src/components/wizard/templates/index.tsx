@@ -1,0 +1,5 @@
+export { RectangleTemplate } from './rectangle-template'
+export { LShapeTemplate } from './l-shape-template'
+export { UShapeTemplate } from './u-shape-template'
+export { TShapeTemplate } from './t-shape-template'
+export { CustomTemplate } from './custom-template'
