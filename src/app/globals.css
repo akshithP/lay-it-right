@@ -253,6 +253,21 @@
     @apply text-sm font-semibold opacity-70;
   }
 
+  /* Pattern selection styles */
+  .pattern-card {
+    @apply transition-all duration-200 cursor-pointer;
+  }
+
+  .pattern-card:hover {
+    box-shadow: 6px 6px 0px var(--layit-orange);
+    transform: translate(-2px, -2px);
+  }
+
+  .pattern-card.selected {
+    box-shadow: 8px 8px 0px var(--layit-orange);
+    transform: translate(-3px, -3px);
+  }
+
   /* Custom animations */
   @keyframes blockPulse {
     0%, 100% {
@@ -262,6 +277,15 @@
     50% {
       transform: scale(1.1);
       opacity: 0.8;
+    }
+  }
+
+  @keyframes patternPulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
     }
   }
 }
