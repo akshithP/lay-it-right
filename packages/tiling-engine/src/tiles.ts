@@ -5,7 +5,7 @@
 
 import type { LayoutNode } from '@/types/canvas'
 import type { LayoutPattern, TileSpecification, Unit } from '@/types'
-import { pointInPolygon, normalizePolygon } from '@/lib/canvas/geometry-utils'
+import { pointInPolygon } from '@/lib/canvas/geometry-utils'
 import convert from 'convert-units'
 
 export interface TilePosition {
