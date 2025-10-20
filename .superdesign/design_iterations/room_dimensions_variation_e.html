@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LayItRight - Step 1: Room Dimensions</title>
+  <link rel="stylesheet" href="room_dimensions_theme.css">
+  <style>
+    /* Additional inline styles for this specific layout */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-lg);
+      border-bottom: var(--border-width) solid var(--border-color);
+      padding-bottom: var(--spacing-md);
+    }
+
+    .header-title {
+      font-size: var(--font-size-h2);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .step-badge {
+      font-size: var(--font-size-small);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      letter-spacing: 1px;
+    }
+
+    .units-group {
+      display: flex;
+      gap: var(--spacing-xs);
+      flex-wrap: wrap;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .input-group {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .input-label {
+      font-size: var(--font-size-small);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: var(--spacing-xs);
+      color: var(--text-secondary);
+    }
+
+    .input-field {
+      width: 100%;
+      padding: var(--spacing-sm);
+      font-size: var(--font-size-body);
+      border: var(--border-width) solid var(--border-color);
+      background: var(--layit-white);
+      transition: all var(--transition-fast);
+    }
+
+    .input-field:focus {
+      outline: none;
+      box-shadow: var(--shadow-md), 0 0 0 3px var(--layit-orange);
+      border-color: var(--layit-orange);
+    }
+
+    .swap-button {
+      width: 100%;
+      padding: var(--spacing-sm);
+      margin-top: var(--spacing-sm);
+      transition: all var(--transition-normal);
+    }
+
+    .swap-button:active {
+      transform: rotate(180deg);
+    }
+
+    .preview-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .room-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .footer {
+      display: flex;
+      gap: var(--spacing-md);
+      justify-content: space-between;
+      margin-top: var(--spacing-lg);
+    }
+
+    .footer button {
+      flex: 1;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .story-card {
+      animation: slideUp 0.3s ease-out both;
+    }
+
+    .story-card:nth-child(1) { animation-delay: 0.05s; }
+    .story-card:nth-child(2) { animation-delay: 0.15s; }
+    .story-card:nth-child(3) { animation-delay: 0.25s; }
+    .story-card:nth-child(4) { animation-delay: 0.35s; }
+    .story-card:nth-child(5) { animation-delay: 0.45s; }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: center;
+      }
+
+      .footer {
+        flex-direction: column;
+      }
+
+      .footer button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-title">◄ STEP 1: ROOM DIMENSIONS</div>
+      <div class="step-badge">Step 1 of 4 ►</div>
+    </div>
+
+    <!-- Story Card 1: Unit Selection -->
+    <div class="story-card">
+      <div class="story-card-title">
+        <span class="story-card-icon">📏</span>
+        SELECT YOUR MEASUREMENT UNIT
+      </div>
+      <div class="units-group" id="unitButtons">
+        <button class="unit-button active" data-unit="m">M</button>
+        <button class="unit-button" data-unit="cm">Cm</button>
+        <button class="unit-button" data-unit="mm">Mm</button>
+        <button class="unit-button" data-unit="ft">Ft</button>
+        <button class="unit-button" data-unit="in">In</button>
+      </div>
+    </div>
+
+    <!-- Story Card 2: Dimension Input -->
+    <div class="story-card">
+      <div class="story-card-title">
+        <span class="story-card-icon">📐</span>
+        MEASURE YOUR ROOM
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Length (Horizontal):</label>
+        <input type="number" id="lengthInput" class="input-field" placeholder="Enter length" value="5.5" min="0.1" max="100" step="0.1">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Width (Vertical):</label>
+        <input type="number" id="widthInput" class="input-field" placeholder="Enter width" value="3.2" min="0.1" max="100" step="0.1">
+      </div>
+
+      <button class="swap-button btn-secondary">↔ SWAP DIMENSIONS</button>
+    </div>
+
+    <!-- Story Card 3: Preview -->
+    <div class="story-card">
+      <div class="story-card-title">
+        <span class="story-card-icon">👁️</span>
+        VISUALIZE YOUR ROOM
+      </div>
+
+      <div class="preview-container">
+        <svg class="room-svg" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Room rectangle -->
+          <rect class="room-rectangle" x="50" y="40" width="200" height="120" />
+
+          <!-- Dimension labels -->
+          <text x="150" y="25" text-anchor="middle" class="room-label" font-size="14">5.5m</text>
+          <text x="25" y="105" text-anchor="middle" class="room-label" font-size="14" transform="rotate(-90 25 105)">3.2m</text>
+
+          <!-- Area display -->
+          <text x="150" y="105" text-anchor="middle" class="room-label" font-size="16" font-weight="bold" fill="#10375C">17.6 m²</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Story Card 4: Calculations -->
+    <div class="story-card">
+      <div class="story-card-title">
+        <span class="story-card-icon">📊</span>
+        YOUR CALCULATIONS
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-label">Area</div>
+          <div class="stat-value" id="areaValue">17.6</div>
+          <div style="font-size: var(--font-size-small); color: var(--text-secondary);" id="areaUnit">m²</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Perimeter</div>
+          <div class="stat-value" id="perimeterValue">17.4</div>
+          <div style="font-size: var(--font-size-small); color: var(--text-secondary);" id="perimeterUnit">m</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Story Card 5: Tips -->
+    <div class="story-card">
+      <div class="story-card-title">
+        <span class="story-card-icon">💡</span>
+        PRO TIPS FOR MEASURING
+      </div>
+
+      <ul class="tips-list">
+        <li class="tips-item">Measure from corner to corner for the most accurate length and width</li>
+        <li class="tips-item">Count alcoves, bay windows, and any protrusions in your measurements</li>
+        <li class="tips-item">Always round up slightly for a safety margin in tile coverage</li>
+        <li class="tips-item">Double-check your measurements before proceeding to the next step</li>
+      </ul>
+    </div>
+
+    <!-- Footer: Navigation -->
+    <div class="footer">
+      <button class="btn-secondary">◄ BACK</button>
+      <button class="btn-primary">CONTINUE ►</button>
+    </div>
+  </div>
+
+  <script>
+    // Unit conversion factors (to base unit: mm)
+    const unitConversions = {
+      m: 1000,
+      cm: 10,
+      mm: 1,
+      ft: 304.8,
+      in: 25.4
+    };
+
+    const unitLabels = {
+      m: 'm',
+      cm: 'cm',
+      mm: 'mm',
+      ft: 'ft',
+      in: 'in'
+    };
+
+    let currentUnit = 'm';
+
+    // Get DOM elements
+    const lengthInput = document.getElementById('lengthInput');
+    const widthInput = document.getElementById('widthInput');
+    const unitButtons = document.querySelectorAll('.unit-button');
+    const swapButton = document.querySelector('.swap-button');
+    const areaValue = document.getElementById('areaValue');
+    const perimeterValue = document.getElementById('perimeterValue');
+    const areaUnit = document.getElementById('areaUnit');
+    const perimeterUnit = document.getElementById('perimeterUnit');
+
+    // Unit button listeners
+    unitButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        unitButtons.forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        const newUnit = e.target.dataset.unit;
+        convertUnits(currentUnit, newUnit);
+        currentUnit = newUnit;
+        updateDisplay();
+      });
+    });
+
+    // Input listeners
+    lengthInput.addEventListener('input', updateDisplay);
+    widthInput.addEventListener('input', updateDisplay);
+
+    // Swap button listener
+    swapButton.addEventListener('click', () => {
+      [lengthInput.value, widthInput.value] = [widthInput.value, lengthInput.value];
+      updateDisplay();
+    });
+
+    // Convert values between units
+    function convertUnits(fromUnit, toUnit) {
+      const lengthMM = lengthInput.value * unitConversions[fromUnit];
+      const widthMM = widthInput.value * unitConversions[toUnit];
+
+      lengthInput.value = (lengthMM / unitConversions[toUnit]).toFixed(2);
+      widthInput.value = (widthMM / unitConversions[toUnit]).toFixed(2);
+    }
+
+    // Update display calculations and preview
+    function updateDisplay() {
+      const length = parseFloat(lengthInput.value) || 0;
+      const width = parseFloat(widthInput.value) || 0;
+
+      // Calculate area (square units) and perimeter
+      const area = length * width;
+      const perimeter = 2 * (length + width);
+
+      // Update stats
+      areaValue.textContent = area.toFixed(2);
+      perimeterValue.textContent = perimeter.toFixed(2);
+      areaUnit.textContent = `${unitLabels[currentUnit]}²`;
+      perimeterUnit.textContent = unitLabels[currentUnit];
+
+      // Update preview SVG
+      updatePreviewSVG(length, width, area);
+
+      // Validate inputs
+      validateInputs();
+    }
+
+    // Update preview SVG
+    function updatePreviewSVG(length, width, area) {
+      const svg = document.querySelector('.room-svg');
+      const maxDim = Math.max(length, width);
+      const scale = 150 / maxDim;
+
+      const rectWidth = length * scale;
+      const rectHeight = width * scale;
+      const startX = (300 - rectWidth) / 2;
+      const startY = (200 - rectHeight) / 2;
+
+      // Update room rectangle
+      const rect = svg.querySelector('.room-rectangle');
+      rect.setAttribute('x', startX);
+      rect.setAttribute('y', startY);
+      rect.setAttribute('width', rectWidth);
+      rect.setAttribute('height', rectHeight);
+
+      // Update labels
+      const texts = svg.querySelectorAll('text');
+      texts[0].setAttribute('x', 150);
+      texts[0].setAttribute('y', startY - 10);
+      texts[0].textContent = `${length} ${unitLabels[currentUnit]}`;
+
+      texts[1].setAttribute('x', startX - 25);
+      texts[1].setAttribute('y', startY + rectHeight / 2);
+      texts[1].textContent = `${width} ${unitLabels[currentUnit]}`;
+
+      texts[2].setAttribute('x', startX + rectWidth / 2);
+      texts[2].setAttribute('y', startY + rectHeight / 2 + 5);
+      texts[2].textContent = `${area.toFixed(2)} ${unitLabels[currentUnit]}²`;
+    }
+
+    // Validate inputs
+    function validateInputs() {
+      const length = parseFloat(lengthInput.value);
+      const width = parseFloat(widthInput.value);
+
+      if (length > 0 && width > 0) {
+        lengthInput.classList.remove('input-invalid');
+        widthInput.classList.remove('input-invalid');
+        lengthInput.classList.add('input-valid');
+        widthInput.classList.add('input-valid');
+      } else {
+        lengthInput.classList.remove('input-valid');
+        widthInput.classList.remove('input-valid');
+        lengthInput.classList.add('input-invalid');
+        widthInput.classList.add('input-invalid');
+      }
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      updateDisplay();
+    });
+  </script>
+</body>
+</html>
