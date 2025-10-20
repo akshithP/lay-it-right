@@ -1,3 +1,4 @@
 # Dependencies\nnode_modules/\nnpm-debug.log*\nyarn-debug.log*\nyarn-error.log*\n.pnpm-debug.log*\n\n# Next.js\n.next/\nout/\nbuild/\n\n# Environment variables\n.env\n.env*.local\n\n# Testing\ncoverage/\n.nyc_output/\n\n# IDEs and editors\n.vscode/\n.idea/\n*.swp\n*.swo\n*~\n\n# OS\n.DS_Store\n.DS_Store?\n._*\n.Spotlight-V100\n.Trashes\nehthumbs.db\nThumbs.db\n\n# Temporary\n*.log\n.cache/\n.temp/\ntmp/\n\n# Build outputs\ndist/\n*.tgz\n*.tar.gz
 node_modules/@next/swc-win32-x64-msvc/next-swc.win32-x64-msvc.node
 lay-it-right/
+node_modules/
