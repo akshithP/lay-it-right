@@ -230,51 +230,53 @@ function generateHerringbonePattern(config: TilePatternConfig): TilePosition[] {
 function clipTilesToPolygon(tiles: TilePosition[], polygonNodes: LayoutNode[]): TilePosition[] {
   if (polygonNodes.length < 3) return tiles
 
-  return tiles
-    .map(tile => {
-      const corners = [
-        { x: tile.x, y: tile.y },
-        { x: tile.x + tile.width, y: tile.y },
-        { x: tile.x + tile.width, y: tile.y + tile.height },
-        { x: tile.x, y: tile.y + tile.height }
-      ]
+  const clippedTiles: TilePosition[] = []
 
-      const cornersInside = corners.filter(corner => pointInPolygon(corner, polygonNodes))
-      const insideCount = cornersInside.length
+  for (const tile of tiles) {
+    const corners = [
+      { x: tile.x, y: tile.y },
+      { x: tile.x + tile.width, y: tile.y },
+      { x: tile.x + tile.width, y: tile.y + tile.height },
+      { x: tile.x, y: tile.y + tile.height }
+    ]
 
-      if (insideCount === 0) {
-        // Check if polygon intersects tile (tile might be larger than polygon)
-        const tileCenter = {
-          x: tile.x + tile.width / 2,
-          y: tile.y + tile.height / 2
-        }
+    const cornersInside = corners.filter(corner => pointInPolygon(corner, polygonNodes))
+    const insideCount = cornersInside.length
 
-        if (!pointInPolygon(tileCenter, polygonNodes)) {
-          return null // Tile is completely outside
-        }
+    if (insideCount === 0) {
+      // Check if polygon intersects tile (tile might be larger than polygon)
+      const tileCenter = {
+        x: tile.x + tile.width / 2,
+        y: tile.y + tile.height / 2
       }
 
-      let tileType: 'full' | 'cut' | 'partial' = 'full'
-      let cutPercentage = 100
-
-      if (insideCount === 4) {
-        tileType = 'full'
-        cutPercentage = 100
-      } else if (insideCount > 0) {
-        tileType = 'cut'
-        cutPercentage = (insideCount / 4) * 100
-      } else {
-        tileType = 'partial'
-        cutPercentage = 25 // Estimate for intersection
+      if (!pointInPolygon(tileCenter, polygonNodes)) {
+        continue // Tile is completely outside
       }
+    }
 
-      return {
-        ...tile,
-        type: tileType,
-        cutPercentage
-      }
+    let tileType: 'full' | 'cut' | 'partial' = 'full'
+    let cutPercentage = 100
+
+    if (insideCount === 4) {
+      tileType = 'full'
+      cutPercentage = 100
+    } else if (insideCount > 0) {
+      tileType = 'cut'
+      cutPercentage = (insideCount / 4) * 100
+    } else {
+      tileType = 'partial'
+      cutPercentage = 25 // Estimate for intersection
+    }
+
+    clippedTiles.push({
+      ...tile,
+      type: tileType,
+      cutPercentage
     })
-    .filter((tile): tile is TilePosition => tile !== null)
+  }
+
+  return clippedTiles
 }
 
 /**

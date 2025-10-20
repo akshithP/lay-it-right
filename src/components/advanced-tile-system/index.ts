@@ -30,7 +30,6 @@ export {
   generateShoppingList,
   generateDetailedReport
 } from '../../utils/advanced-tile-calculations'
-export type { DetailedResults } from '../../utils/advanced-tile-calculations'
 
 // Layout and Responsiveness
 export { MobileOptimizedLayout, useResponsiveValue } from '../layout/MobileOptimizedLayout'
