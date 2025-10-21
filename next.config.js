@@ -2,6 +2,17 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  output: 'export',
+  basePath: '/lay-it-right',
+  images: {
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com'
+      }
+    ]
+  },
   eslint: {
     // Disable ESLint during build to allow deployment
     // These are mostly test/debug code with unused variables
@@ -13,14 +24,6 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion']
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com'
-      }
-    ]
   }
 }
 
