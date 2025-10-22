@@ -6,6 +6,7 @@ import { useProjectStore } from '@/store/project-store'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ProgressIndicator } from './progress-indicator'
+import { HelpModal } from './help-modal'
 
 interface WizardLayoutProps {
   children: ReactNode
@@ -61,9 +62,11 @@ export function WizardLayout({
       <header className="w-full px-6 py-4 flex justify-between items-center border-b-4 border-layit-blue bg-layit-white">
         <div className="text-2xl font-bold text-layit-blue">LAYITRIGHT</div>
         <div className="flex gap-4">
+          <HelpModal currentStep={currentStep} />
           <button
             onClick={handleHome}
             className="bg-layit-white border-3 border-layit-blue p-2 transition-all hover:shadow-[3px_3px_0px_theme(colors.layit.orange)] hover:translate-x-[-1px] hover:translate-y-[-1px]"
+            aria-label="Go to home"
           >
             <ArrowLeftIcon className="w-5 h-5 text-layit-blue" />
           </button>
